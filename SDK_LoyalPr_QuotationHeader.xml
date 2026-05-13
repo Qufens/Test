@@ -1,0 +1,594 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension code="SDK_LoyalPr" version="1.0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Extensions.xsd">
+	<!--<azurefunctions>
+		<function name="HttpExample" caption="HttpExample test function"  returntype="String">
+			<endpoint>https://extensionsazurefunctest.vault.azure.net/</endpoint>
+			<authorization>
+				<keyvault endpoint="https://extensionsazurefunctest.vault.azure.net/" secret="helloworld"></keyvault>
+			</authorization>
+			<parameters>
+				<parameter name="name" caption="Your name" required="false" />
+			</parameters>
+		</function>
+		<function name="BoolTest" caption="Booltest function" returntype="Double">
+			<endpoint>https://extensionsazurefunctest.vault.azure.net/</endpoint>
+			<authorization>
+				<keyvault endpoint="https://extensionsazurefunctest.vault.azure.net/" secret="helloworld"></keyvault>
+			</authorization>
+			<parameters>
+				<parameter name="name" caption="Your name" required="false" />
+			</parameters>
+		</function>
+	</azurefunctions>-->
+	<entities>
+		<entity name="Account" table="Accounts" extensiontable="SDK_LoyalPr_Accounts" businesscomponent="Account">
+			<property name="SDK_LoyalPrLoyaltyMember" columnname="LoyaltyMember" type="boolean" caption="Loyalty member" />
+			<property name="SDK_LoyalPrLoyaltyCard" columnname="LoyaltyCard" caption="Loyalty card" type="string" length="18" allowempty="false" />
+			<property name="SDK_LoyalPrLoyaltyDiscount" columnname="LoyaltyDiscount" caption="Loyalty discount" type="double" scale="4" />
+			<property name="SDK_LoyalPrLoyaltyCardValidity" columnname="LoyaltyCardValidity" caption="Loyalty Card Validity" type="date" />
+			<property name="SDK_LoyalPrLoyaltyLevel" columnname="LoyaltyLevel" type="integer" caption="Loyalty level">
+				<listitems allowempty="true" listdefinitionid="LoyaltyLevelList">
+					<listitem value="1" caption="Entry" />
+					<listitem value="3" caption="Gold" translationid="SDK_LoyalPrGoldTranslated" />
+					<listitem value="2" caption="Silver" />
+					<listitem value="4" caption="Platinum" translationid="SDK_LoyalPrplatinumTranslated" />
+				</listitems>
+			</property>
+			<property name="SDK_LoyalPrAccount" columnname="Account" caption="Extension Account" type="guid" refersto="Account" />
+			<property name="SDK_LoyalPrProject" columnname="Project" caption="Extension Project" type="guid" refersto="Project" />
+			<property name="SDK_LoyalPrContact" columnname="Contact" caption="Extension Contact" type="guid" refersto="Contact" />
+			<property name="SDK_LoyalPrOpportunity" columnname="Opportunity" caption="Extension Opportunity" type="guid" refersto="Opportunity" />
+			<property name="SDK_LoyalPrSalesOrder" columnname="SalesOrder" caption="Extension SalesOrder" type="guid" refersto="SalesOrder" />
+			<property name="SDK_LoyalPrItem" columnname="Item" caption="Extension Item" type="guid" refersto="Item" />
+			<property name="SDK_LoyalPrGLAccount" columnname="GLAccount" caption="Extension G/L Account" type="guid" refersto="GLAccount" />
+			<property name="SDK_LoyalPrCostcenter" columnname="Costcenter" caption="Extension Costcenter" type="guid" refersto="Costcenter"/>
+			<property name="SDK_LoyalPrCostunit" columnname="Costunit" caption="Extension Costunit" type="guid" refersto="Costunit"/>
+			<property name="SDK_LoyalPrLoyaltyRemarks" columnname="LoyaltyRemarks" caption="Loyalty remarks" type="string" length="400" />
+			<property name="SDK_LoyalPrJournal" columnname="Journal" caption="Extension Journal" type="guid" refersto="Journal" />
+			<property name="SDK_LoyalPrQuotationHeaders" columnname="Quotation" caption="Extension Quotation" type="guid" refersto="Quotation" />
+			<property name="SDK_LoyalPrPurchaseOrder" columnname="PurchaseOrder" caption="Extension PurchaseOrder" type="guid" refersto="PurchaseOrder" />
+			<property name="SDK_LoyalPrShopOrder" columnname="ShopOrder" caption="Extension ShopOrder" type="guid" refersto="ShopOrder" />
+		</entity>
+		<!--
+		For the invoice creation process to take over extension properties, it is necessary that the relevant extension
+		have identical names (name attribute) in the SalesInvoiceLine and the SalesOrderLine entities.
+		If that is the case, then copying the corresponding property values in the invoice creation process is automatic.
+		-->
+		<entity name="SalesTransaction" table="SalesTransactions" extensiontable="SDK_LoyalPr_SalesTransactions" businesscomponent="SalesInvoiceLine">
+			<property name="SDK_LoyalPrLoyaltyColor" columnname="LoyaltyColor" caption="Color" type="string" length="30" />
+			<!-- numericstring -->
+			<property name="SDK_LoyalPrEANNumber" columnname="EANNumber" caption="EAN number" type="numericstring" length="18" />
+			<!-- guid -->
+			<property name="SDK_LoyalPrSupplier" columnname="Account" type="guid" refersto="Account" caption="Supplier" />
+		</entity>
+		<entity name="SalesOrder" table="SalesOrderLines" extensiontable="SDK_LoyalPr_SalesOrders" businesscomponent="SalesOrderLine">
+			<property name="SDK_LoyalPrLoyaltyColor" columnname="LoyaltyColor" caption="Color" type="string" length="30" />
+			<property name="SDK_LoyalPrEANNumber" columnname="EANNumber" caption="EAN number" type="numericstring" length="18" />
+			<property name="SDK_LoyalPrSupplier" columnname="Account" type="guid" refersto="Account" caption="Supplier" />
+		</entity>
+		<entity name="SalesTransaction" table="SalesTransactions" extensiontable="SDK_LoyalPr_SalesInvoiceHeaders" businesscomponent="SalesInvoiceHeader">
+			<property name="SDK_LoyalPrLoyaltyDiscount" columnname="LoyaltyDiscount" caption="Loyalty discount" type="double" />
+			<property name="SDK_LoyalPrLoyaltyLevel" columnname="LoyaltyLevel" type="integer" caption="Loyalty level">
+				<listitems allowempty="true" listdefinitionid="LoyaltyLevelList">
+					<listitem value="1" caption="Entry" />
+					<listitem value="3" caption="Gold" />
+					<listitem value="2" caption="Silver" />
+					<listitem value="4" caption="Platinum" />
+				</listitems>
+			</property>
+		</entity>
+		<entity name="GLTransaction" table="GLTransactions" extensiontable="SDK_LoyalPr_GLTransactions" businesscomponent="CashflowEntryOffsetLine">
+			<property name="SDK_LoyalPrBankName" columnname="BankName" caption="Bank name" type="string" length="34" />
+			<property name="SDK_LoyalPrIban" columnname="Iban" caption="Iban" type="string" length="34" />
+		</entity>
+		<entity name="Subscription" table="Subscriptions" extensiontable="SDK_LoyalPr_Subscriptions" businesscomponent="SubscriptionLine">
+			<property name="SDK_LoyalPr_FullText_IndexTest" columnname="FullText_IndexTest" caption="Full Text Index Test" type="string" length="34" />
+		</entity>
+		<entity name="Item" businesscomponent="Item" table="Items" extensiontable="SDK_LoyalPr_Items">
+			<property name="SDK_LoyalPrAccount" columnname="Account" caption="Extension Customer" type="guid" refersto="Account" />
+		</entity>
+		<entity name="PurchaseEntryLine" table="GLTransactions" extensiontable="SDK_LoyalPr_PurchaseEntryLines" businesscomponent="PurchaseEntryLine">
+			<property name="SDK_LoyalPr_Kandidaat" columnname="Kandidaat" type="string" caption="Candidate" length="100" />
+		</entity>
+		<entity name="SalesOrderHeader" table="SalesOrderHeaders" extensiontable="SDK_LoyalPr_SalesOrderHeader" businesscomponent="SalesOrderHeader">
+			<property name="SDK_LoyalPrSalesOrderTotalDiscount" columnname="TotalDiscount" caption="Total discount Sales Order" type="double"/>
+			<property name="SDK_LoyalPrSalesOrderTotalItem" columnname="TotalItems" caption="Total items Sales Order" type="integer"/>
+		</entity>
+		<entity name="ShopOrder" table="ShopOrders" extensiontable="SDK_LoyalPr_ShopOrders" businesscomponent="ShopOrder">
+			<property name="SDK_LoyalPr_CartNumber" columnname="CartNumber" type="string" caption="Cart number" length="30" />
+		</entity>
+		<entity name="SalesQuotationHeader" table="QuotationHeaders" extensiontable="SDK_LoyalPr_QuotationHeader" businesscomponent="SalesQuotationHeader">
+			<property name="SDK_LoyalPrQuotationTotalQuantity" columnname="TotalQuantity" caption=" Total quantity Sales Quotation" type="integer"/>
+		</entity>
+	</entities>
+
+	<businesscomponentextensions>
+		<businesscomponent name="SalesInvoiceLine">
+
+			<!-- You can reference a new property (type guid) in the same extension file -->
+			<references>
+				<reference forproperty="SDK_LoyalPrSupplier">
+					<property name="SDK_LoyalPrSupplier_City" columnname="City" />
+				</reference>
+			</references>
+		</businesscomponent>
+		<businesscomponent name="Account">
+			<!--
+		***** IMPORTANT *****
+        - Extends functional validations for business components
+        - Validation logic is written in Azure function exposed with the endpoint specified in azurefunctionendpoint
+        - API key for the HTTP Triggered azure function is kept in Keyvault maintained by Exact and a reference to the key is set here with azuresecretref attribute
+		- azuresecretref can only contain alphanumeric charecters and '-'
+        - Multiple functional components can use a same azure function
+        - targetproperty for a functionalcomponent refers to the name of the field to be validated
+        - azureoperationname refers to the operation within the azure function            
+	-->
+			<!--
+			<azurevalidations azurefunctionendpoint="https://auroraplatformfunctionvalidator.azurewebsites.net" azuresecretref="SDK-LoyalPr-EmailValidatorFunctionAPIKeyRef">
+				<functionalcomponent targetproperty="Email" azureoperationname="ValidateEmail"/>
+			</azurevalidations>-->
+			<references>
+				<!--You can also define reference properties, based on a reference, 
+						for which no existing readonly datasource exists-->
+				<reference forproperty="SDK_LoyalPrSalesOrder">
+					<property name="SDK_LoyalPrSalesOrder_SalesOrderNumber" columnname="SalesOrderNumber" />
+				</reference>
+			</references>
+			<functionalcomponent type="ExpressionDefault" targetproperty="SDK_LoyalPrLoyaltyCard" propertyStates="AfterAddNew">
+				<expression>
+					Upper('ABC123')
+				</expression>
+			</functionalcomponent>
+			<!-- Custom defaults can be defined with an expression -->
+			<functionalcomponent type="ExpressionDefault" targetproperty="Email" propertyStates="AfterAddNew AfterEdit AfterCopy Overwrite">
+				<expression>
+					Concat('info@', 'exact', '.com')
+				</expression>
+			</functionalcomponent>
+		</businesscomponent>
+		<businesscomponent name="SalesOrderHeader">
+			<references>
+				<reference forproperty="OrderAccount">
+					<property name="OrderAccount_Name" columnname="Name" caption="Name" captionid="0"/>
+					<property name="OrderAccount_City" columnname="City" caption="City" captionid="0"/>
+					<property name="OrderAccount_MainContact" columnname="MainContact" caption="MainContact" captionid="0"/>
+					<property name="OrderAccount_Parent" columnname="Parent" caption="Parent" captionid="0"/>
+				</reference>
+				<reference forproperty="OrderAccount_MainContact">
+					<property name="OrderAccount_MainContact_BusinessEmail" columnname="BusinessEmail" caption="BusinessEmail" captionid="0"/>
+				</reference>
+				<reference forproperty="OrderAccount_Parent">
+					<property name="OrderAccount_Parent_Name" columnname="Name" caption="Name" captionid="0"/>
+					<property name="OrderAccount_Parent_MainContact" columnname="MainContact" caption="MainContact" captionid="0"/>
+				</reference>
+				<reference forproperty="OrderAccount_Parent_MainContact">
+					<property name="OrderAccount_Parent_MainContact_BusinessEmail" columnname="BusinessEmail" caption="BusinessEmail" captionid="0"/>
+				</reference>
+			</references>
+			<functionalcomponent type="ExpressionDefault" targetproperty="SDK_LoyalPrSalesOrderTotalDiscount" propertyStates="AfterAddNew BeforeInsert BeforeUpdate Overwrite">
+				<expression>
+					Sum(LineValues('Discount'))
+				</expression>
+			</functionalcomponent>
+			<functionalcomponent type="ExpressionDefault" targetproperty="SDK_LoyalPrSalesOrderTotalItem" propertyStates="AfterAddNew BeforeInsert BeforeUpdate Overwrite">
+				<expression>
+					Sum(LineValues('Quantity'))
+				</expression>
+			</functionalcomponent>
+		</businesscomponent>
+		<businesscomponent name="SalesQuotationHeader">
+			<functionalcomponent type="ExpressionDefault" targetproperty="SDK_LoyalPrQuotationTotalQuantity" propertyStates="AfterAddNew BeforeInsert BeforeUpdate Overwrite">
+				<expression>
+					Sum(LineValues('Quantity'))
+				</expression>
+			</functionalcomponent>
+		</businesscomponent>
+	</businesscomponentextensions>
+	<megamenuextensions>
+		<megamenuextension menuid="MegaMenu">
+			<tab id="MyTab" caption="SDK My DEMO Menu" existing="false">
+				<mandatoryfeaturesets>
+					<featureset>GeneralPro</featureset>
+				</mandatoryfeaturesets>
+				<section id="MenuBookmarks" caption="SDK Bookmarks" existing="false">
+					<subsection id="MenuCustomers" caption="Accounts" existing="false">
+						<link id="MenuCreate" caption="Create customer" href="CRMAccountNew.aspx?Supplier=0&amp;Customer=1" existing="false">
+							<functionpoint>Account</functionpoint>
+							<permission>Create</permission>
+						</link>
+						<link id="MenuOverview" caption="Overview accounts" href="CRMAccounts.aspx?Status=C&amp;Selector=List%3atList" showinnewtab="true" existing="false">
+							<functionpoint>Account</functionpoint>
+						</link>
+						<link id="MenuPowerBI" caption="Power BI" href="https://powerbi.microsoft.com/en-us/" showinnewtab="true" existing="false" />
+						<powerbilink id="AuroraDesignExamples" caption="Power BI: Aurora Design Examples">
+							<powerbireportembedlink>https://app.powerbi.com/reportEmbed?reportId=8bf3b8d1-af9b-4a1b-828a-819b2ee13258&amp;autoAuth=true&amp;ctid=88a15be7-1abe-4bed-a8d0-e3521bcb4cfe</powerbireportembedlink>
+							<pagetitle>Aurora Design Examples</pagetitle>
+							<functionpoint>Account</functionpoint>
+						</powerbilink>
+						<googlesheetslink id="AuroraGoogleSheetDesignExamples" caption="GoogleSheets: Aurora Goolge Sheets Design Examples">
+							<googlesheetsembedlink>https://docs.google.com/spreadsheets/d/1muzMUbOZDqxXcNeRSAyxNO5Aa24Ws2VRDjrdot_Vhh0/edit?rm=minimal#gid=1876098486</googlesheetsembedlink>
+							<pagetitle>Aurora GoogleSheets Design Examples</pagetitle>
+							<functionpoint>Account</functionpoint>
+						</googlesheetslink>
+					</subsection>
+				</section>
+			</tab>
+			<tab id="Dashboards" existing="true" translationid="SDK_LoyalPrDashboard">
+				<section id="Dashboards" existing="true">
+					<subsection id="General" existing="true">
+						<link id="MenuGeneralMollie" caption="SDK LoyalPr BE Localization" href="https://www.mollie.com/en" showinnewtab="true" existing="false">
+							<mandatorylegislation>Belgium</mandatorylegislation>
+						</link>
+					</subsection>
+					<subsection id="MenuDashboardSubsection" caption="SDK LoyalPr Company Dashboards" existing="false">
+						<link id="MenuCompanyStartpage" caption="SDK Company Startpage" href="https://employees.exact.com" showinnewtab="true" existing="false" />
+					</subsection>
+				</section>
+				<section id="MenuPowerBI" caption="SDK PowerBI" translationid="SDK_LoyalPrPowerBI" existing="false">
+					<subsection id="MenuDashboardSubsection1" caption="SDK PowerBI reports" translationid="SDK_LoyalPrDashboardSection" existing="false">
+						<link id="MenuDashboardLink1" caption="Favorites" translationid="SDK_LoyalPrFavourites" href="https://app.powerbi.com/favorites" showinnewtab="true" existing="false" />
+						<link id="MenuDashboardLink2" caption="Recent" translationid="SDK_LoyalPrRecent" href="https://app.powerbi.com/recentlyviewed" showinnewtab="true" existing="false" />
+					</subsection>
+				</section>
+			</tab>
+		</megamenuextension>
+	</megamenuextensions>
+	<quickmenuextensions>
+		<quickmenuextension menuid="Accounting">
+			<subsection id="FinancialEntries" existing="true" caption="Financial entry">
+				<link id="MenuFinancialEntry" caption="SDK LoyalPr Petty cash entry" href="FinInvoiceEntry.aspx" translationid="SDK_LoyalPrPettyCash" existing="false" />
+			</subsection>
+			<subsection id="MenuLocalization" caption="SDK LoyalPr section" existing="false">
+				<link id="MenuMollie" caption="Mollie" href="https://www.mollie.com/en" showinnewtab="true" existing="false" />
+			</subsection>
+		</quickmenuextension>
+	</quickmenuextensions>
+	<applicationextensions>
+		<applicationextension application="CRMAccountCard.aspx">
+			<button caption="SDK Mollie" id="LoyalPrMollieCard" translationid="SDK_LoyalPrMollie" href="http://mollie.com/en" showinnewtab="true" existing="false">
+				<documentation>Link to Mollie </documentation>
+			</button>
+			<button caption="Internal Button" id="NewInternalButton" href="CRMAccounts.aspx" existing="false" positionbefore="DeduplicationButton" />
+			<powerbibutton caption="Power BI: Sales Report" id="PowerBiButton" showinnewtab="false" existing="false">
+				<powerbireportembedlink>https://app.powerbi.com/reportEmbed?reportId=8bf3b8d1-af9b-4a1b-828a-819b2ee13258&amp;autoAuth=true&amp;ctid=88a15be7-1abe-4bed-a8d0-e3521bcb4cfe</powerbireportembedlink>
+				<pagetitle>Sales report</pagetitle>
+				<functionpoint>Account</functionpoint>
+			</powerbibutton>
+			<googlesheetsbutton caption="Google Sheets: Sales Report" id="GoogleSheetsButton" showinnewtab="false" existing="false">
+				<googlesheetsembedlink>https://docs.google.com/spreadsheets/d/e/2PACX-1vQ4ZGDPpfojiOc1xXHQKlqIEyrN60TuDQN1YC7H9Dgh2JsRA_r6xwZq8F8xI7TLDUPF6uP69CdEapwL/pubhtml?widget=false&amp;headers=false</googlesheetsembedlink>
+				<pagetitle>Sales report</pagetitle>
+				<functionpoint>Account</functionpoint>
+			</googlesheetsbutton>
+			<monitor id="QuickActionsMonitor" existing="true">
+				<documentation>Customize monitor</documentation>
+				<monitoritem id="Monitor" caption="SDK QuickLinks" href="CRMAccounts.aspx" image="icon-customer-30.png" positionbefore="AddNewCommunicationNoteAction" existing="false" />
+				<monitoritem id="ExternalLink" caption="SDK external link" href="https://www.yahoo.com" showinnewtab="true" image="icon-competitor-30.png" existing="false" />
+				<monitoritem existing="true" id="AddNewCommunicationNoteAction" caption="Change href for existing monitor" href="https://www.google.com" showinnewtab="true">
+					<documentation>Link to google</documentation>
+				</monitoritem>
+				<powerbimonitoritem id="PowerBiMonitorItem" showinnewtab="false" caption="Power BI: Sales Report" existing="false">
+					<powerbireportembedlink>https://app.powerbi.com/reportEmbed?reportId=8bf3b8d1-af9b-4a1b-828a-819b2ee13258&amp;autoAuth=true&amp;ctid=88a15be7-1abe-4bed-a8d0-e3521bcb4cfe</powerbireportembedlink>
+					<pagetitle>Sales report</pagetitle>
+					<functionpoint>Account</functionpoint>
+				</powerbimonitoritem>
+				<googlesheetsmonitoritem id="GoogleSheetsMonitorItem" showinnewtab="false" caption="Google Sheets: Sales Report" existing="false">
+					<googlesheetsembedlink>https://docs.google.com/spreadsheets/d/e/2PACX-1vQ4ZGDPpfojiOc1xXHQKlqIEyrN60TuDQN1YC7H9Dgh2JsRA_r6xwZq8F8xI7TLDUPF6uP69CdEapwL/pubhtml?widget=false&amp;headers=false</googlesheetsembedlink>
+					<pagetitle>Sales report</pagetitle>
+					<functionpoint>Account</functionpoint>
+				</googlesheetsmonitoritem>
+			</monitor>
+			<cardsection id="AccountInfoSection" existing="true">
+				<field id="MollieUrl" positionbefore="PhoneField" href="https://www.mollie.com/en" showinnewtab="true">
+					<documentation>Link to Mollie</documentation>
+				</field>
+			</cardsection>
+			<contentsectionrow id="AccountSectionRow" existing="true">
+				<field id="CocNumberCardField" existing="true" caption="Chamber of Commerce (caption changed)" />
+				<field positionbefore="RemarksField" datafield="SDK_LoyalPrLoyaltyMember" />
+				<field datafield="SDK_LoyalPrLoyaltyCard">
+					<visibleexpression>DivisionSetting('SDK_LoyalPrCardField', true)</visibleexpression>
+					<documentation>Loyalty card number</documentation>
+				</field>
+				<field datafield="SDK_LoyalPrLoyaltyDiscount">
+					<visibleexpression>DivisionSetting('SDK_LoyalPrCardField', true)</visibleexpression>
+				</field>
+				<field datafield="SDK_LoyalPrLoyaltyLevel" controltype="radiobuttonlist" />
+				<field datafield="SDK_LoyalPrAccount"/>
+				<field datafield="SDK_LoyalPrProject"/>
+				<field datafield="SDK_LoyalPrContact"/>
+				<field datafield="SDK_LoyalPrOpportunity"/>
+				<field datafield="SDK_LoyalPrSalesOrder" />
+				<field datafield="SDK_LoyalPrItem" />
+				<field datafield="SDK_LoyalPrGLAccount"/>
+				<field datafield="SDK_LoyalPrCostcenter"/>
+				<field datafield="SDK_LoyalPrCostunit" />
+				<field datafield="SDK_LoyalPrJournal"/>
+				<field datafield="SDK_LoyalPrLoyaltyCardValidity" />
+				<field datafield="SDK_LoyalPrLoyaltyRemarks" />
+				<field datafield="SDK_LoyalPrSalesOrder_SalesOrderNumber" />
+				<field datafield="SDK_LoyalPrQuotationHeaders" />
+				<field datafield="SDK_LoyalPrPurchaseOrder" />
+				<field datafield="SDK_LoyalPrShopOrder" />
+			</contentsectionrow>
+		</applicationextension>
+		<applicationextension application="CRMAccount.aspx">
+			<cardsection id="csGeneral" existing="true">
+				<field datafield="SDK_LoyalPrAccount" />
+				<field datafield="SDK_LoyalPrProject" />
+				<field datafield="SDK_LoyalPrContact" />
+				<field datafield="SDK_LoyalPrOpportunity" />
+				<field datafield="SDK_LoyalPrSalesOrder" />
+				<field datafield="SDK_LoyalPrItem" />
+				<field datafield="SDK_LoyalPrGLAccount"/>
+				<field datafield="SDK_LoyalPrCostcenter" />
+				<field datafield="SDK_LoyalPrCostunit"/>
+				<field datafield="SDK_LoyalPrJournal" />
+				<field datafield="SDK_LoyalPrSalesOrder_SalesOrderNumber" />
+				<field datafield="SDK_LoyalPrQuotationHeaders" />
+				<field datafield="SDK_LoyalPrPurchaseOrder" />
+				<field datafield="SDK_LoyalPrShopOrder" />
+			</cardsection>
+			<cardsection id="csLoyalty" caption="Loyalty Extension Section" positionbefore="csContact1" existing="false">
+				<field datafield="SDK_LoyalPrLoyaltyCard">
+					<visibleexpression>DivisionSetting('SDK_LoyalPrCardField', true)</visibleexpression>
+				</field>
+				<field datafield="SDK_LoyalPrLoyaltyDiscount"  positionbefore="cfCity" />
+				<field datafield="SDK_LoyalPrLoyaltyMember"/>
+				<field datafield="SDK_LoyalPrLoyaltyLevel" controltype="radiobuttonlist" />
+				<field datafield="SDK_LoyalPrLoyaltyCardValidity" />
+				<field datafield="SDK_LoyalPrLoyaltyRemarks" />
+			</cardsection>
+		</applicationextension>
+		<applicationextension application="CRMAccounts.aspx">
+			<button caption="SDK Mollie" positionbefore="btnRefresh" id="Mollie" href="http://mollie.com/en" showinnewtab="true" existing="false" />
+			<filterblock>
+				<filter id="sfLoyaltyLevel" controltype="checkboxlist" listdefinitionid="LoyaltyLevelList" />
+				<filter id="sfLoyaltyCardNumber" >
+					<mandatorylegislation>Netherlands</mandatorylegislation>
+					<documentation>Loyalty card number only accesible to Netherlands legislation</documentation>
+				</filter>
+				<filter id="sfLoyaltyCardBoolean" />
+				<filter id="sfAccount" />
+				<filter id="sfProject" />
+				<filter id="sfContact" />
+				<filter id="sfOpportunity" />
+				<filter id="sfSalesOrder"/>
+				<filter id="sfItem"/>
+				<filter id="sfGLAccount" />
+				<filter id="sfCostcenter"/>
+				<filter id="sfCostunit" />
+				<filter id="sfJournal" />
+				<filter id="sfLoyaltyCardValidity" />
+				<filter id="sfQuotation" />
+				<filter id="sfPurchase" />
+				<filter id="sfShopOrder" />
+			</filterblock>
+			<columngroup id="cgGeneral" existing="true">
+				<join extensiontable="SDK_LoyalPr_Accounts" />
+				<column field="LoyaltyCard" filterid="sfLoyaltyCardNumber" />
+				<column field="LoyaltyMember" filterid="sfLoyaltyCardBoolean"  />
+				<column controltype="checkboxlist" listdefinitionid="LoyaltyLevelList" field="LoyaltyLevel" filterid="sfLoyaltyLevel" >
+					<documentation>List of loyalty levels</documentation>
+				</column>
+				<column field="Account" filterid="sfAccount" />
+				<column field="Project" filterid="sfProject" />
+				<column field="Contact" filterid="sfContact" />
+				<column field="Opportunity" filterid="sfOpportunity" />
+				<column field="SalesOrder" filterid="sfSalesOrder" />
+				<column field="Item" filterid="sfItem"  />
+				<column field="GLAccount" filterid="sfGLAccount" />
+				<column field="Costcenter" filterid="sfCostcenter" />
+				<column field="Costunit" filterid="sfCostunit" />
+				<column field="Journal" filterid="sfJournal" />
+				<column field="LoyaltyCardValidity" filterid="sfLoyaltyCardValidity" />
+				<column field="LoyaltyRemarks"/>
+				<column field="LoyaltyDiscount" scale="2" filterid="sfLoyaltyDiscount" />
+				<column field="Quotation" filterid="sfQuotation"/>
+				<column field="PurchaseOrder" filterid="sfPurchase"/>
+				<column field="ShopOrder" filterid="sfShopOrder"/>
+			</columngroup>
+		</applicationextension>
+		<applicationextension application="FinGLAccount.aspx">
+			<monitor id="csMonitor" existing="true">
+				<monitoritem id="MonitorItem" caption="Accounts" href="CRMAccounts.aspx" showinnewtab="true" image="icon-a-customer.gif" existing="false" positionbefore="csMontran" />
+				<monitoritem id="csMontran" caption="Transaction (Additional caption)" showinnewtab="true" existing="true" />
+			</monitor>
+		</applicationextension>
+		<applicationextension application="SlsEntrySalesInvoice.aspx">
+			<gridpageheader>
+				<section id="sfsHeader" existing="true">
+					<field datafield="SDK_LoyalPrLoyaltyDiscount" >
+						<documentation>Loyalty Discount</documentation>
+					</field>
+					<field datafield="SDK_LoyalPrLoyaltyLevel" controltype="radiobuttonlist"/>
+				</section>
+			</gridpageheader>
+			<gridcolumn datafield="SDK_LoyalPrLoyaltyColor" />
+			<!-- New Gridcolumn with type="guid" -->
+			<gridcolumn datafield="SDK_LoyalPrSupplier" />
+			<gridcolumn datafield="SDK_LoyalPrSupplier_City" />
+		</applicationextension>
+		<applicationextension application="SlsSalesOrderEntry.aspx">
+			<gridpageheader>
+				<section id="sfHeader" existing="true">
+					<field datafield="SDK_LoyalPrSalesOrderTotalDiscount" />
+					<field datafield="SDK_LoyalPrSalesOrderTotalItem" />
+				</section>
+			</gridpageheader>
+			<gridcolumn datafield="SDK_LoyalPrLoyaltyColor" />
+			<gridcolumn datafield="SDK_LoyalPrSupplier" />
+		</applicationextension>
+		<applicationextension application="QuoEntryQuotation.aspx">
+			<gridpageheader>
+				<section id="sfHeader" existing="true">
+					<field datafield="SDK_LoyalPrQuotationTotalQuantity" />
+				</section>
+			</gridpageheader>
+		</applicationextension>
+		<applicationextension application="FinEntryBankCash.aspx">
+			<gridpageheader>
+				<section id="rfHeader" existing="true">
+					<field datafield="SDK_LoyalPrBankName" positionbefore="sfEntryNumberDefault" />
+				</section>
+			</gridpageheader>
+			<gridcolumn datafield="SDK_LoyalPrIban">
+				<documentation>IBAN number</documentation>
+			</gridcolumn>
+		</applicationextension>
+		<!-- Example of using custom fields for the filters and columns -->
+		<applicationextension application="LogItems.aspx">
+			<filterblock>
+				<filter id="sfAccount" />
+			</filterblock>
+			<columngroup id="cgGeneral" existing="true">
+				<join extensiontable="SDK_LoyalPr_Items" />
+				<column field="Account" filterid="sfAccount" />
+			</columngroup>
+		</applicationextension>
+		<!-- Example of using forcolumn attribute -->
+		<applicationextension application="InvSerialBatchNumbers.aspx">
+			<filterblock>
+				<filter id="sfAccount" />
+			</filterblock>
+			<columngroup id="cgGeneral" existing="true">
+				<!--The columns in the columngroupref are extension columns for the Item table. We know that because column dItem refers to the Items table-->
+				<join forcolumn="dItem" extensiontable="SDK_LoyalPr_Items" />
+				<column field="Account" filterid="sfAccount" />
+			</columngroup>
+		</applicationextension>
+		<applicationextension application="FinInvoiceEntry.aspx">
+			<gridcolumn datafield="SDK_LoyalPr_Kandidaat" />
+		</applicationextension>
+		<applicationextension application="SlsSalesOrders.aspx">
+			<columngroup id="cgGeneral" existing="true">
+				<join extensiontable="SDK_LoyalPr_SalesOrderHeader" />
+				<column field="TotalDiscount" />
+				<column field="TotalItems" />
+			</columngroup>
+		</applicationextension>
+		<applicationextension application="QuoQuotations.aspx">
+			<columngroup id="cgGeneral" existing="true">
+				<join extensiontable="SDK_LoyalPr_QuotationHeader" />
+				<column field="TotalQuantity" />
+			</columngroup>
+		</applicationextension>
+		<applicationextension application="MfgShopOrder.aspx">
+			<cardsection id="sfCartNumber" existing="false">
+				<field datafield="SDK_LoyalPr_CartNumber" />
+			</cardsection>
+		</applicationextension>
+		<applicationextension application="MfgShopOrderCard.aspx">
+			<contentsectionrow  id="GeneralSectionRow" existing="true">
+				<field datafield="SDK_LoyalPr_CartNumber" />
+			</contentsectionrow>
+		</applicationextension>
+		<applicationextension application="LogEntries.aspx">
+			<filterblock>
+				<filter id="sfLoyaltyLevel" controltype="checkboxlist" listdefinitionid="LoyaltyLevelList" />
+				<filter id="sfLoyaltyDiscount" />
+			</filterblock>
+			<columngroup id="cgGeneral" existing="true">
+				<join extensiontable="SDK_LoyalPr_SalesInvoiceHeaders" />
+				<column field="LoyaltyDiscount" scale="2" filterid="sfLoyaltyDiscount" />
+				<column controltype="checkboxlist" listdefinitionid="LoyaltyLevelList" field="LoyaltyLevel" filterid="sfLoyaltyLevel" >
+					<documentation>List of loyalty levels</documentation>
+				</column>
+			</columngroup>
+		</applicationextension>
+	</applicationextensions>
+	<companysettingsextensions>
+		<tab id="LoyaltyCard" caption="Loyalty Card" translationid="SDK_LoyalPrLoyaltyCard" existing="false">
+			<section id="General" caption="SDK Loyalty Card" translationid="SDK_LoyalPrLoyaltyCard" existing="false">
+				<setting id="SDK_LoyalPrCardField" caption="Use Loyalty card" type="boolean" defaultvalue="true"  />
+				<setting id="SDK_LoyalPrIntegerSetting" caption="SDK Integer setting" type="integer" defaultvalue="1" />
+				<setting id="SDK_LoyalPrDoubleSetting" caption="SDK Double setting" type="double" defaultvalue="1.2" />
+				<setting id="SDK_LoyalPrStringSetting" caption="SDK String setting" type="string" defaultvalue="foo" />
+				<setting id="SDK_LoyalPrDateSetting" caption="SDK Date setting" type="date" defaultvalue="2021-01-01" />
+			</section>
+		</tab>
+	</companysettingsextensions>
+	<translationextensions>
+		<!--MegaMenu-->
+		<translation id="SDK_LoyalPrPowerBI">
+			<language code="en">Power BI Translated</language>
+			<language code="nl-BE">Power BI Translated NL BE</language>
+			<language code="nl">Power BI Translated NL</language>
+		</translation>
+		<translation id="SDK_LoyalPrDashboard">
+			<language code="en">Dashboard Translated</language>
+			<language code="nl">Dashboard Translated NL</language>
+		</translation>
+		<translation id="SDK_LoyalPrDashboardSection">
+			<language code="en">Dashboard Section Translated</language>
+			<language code="nl">Dashboard Section Translated NL</language>
+		</translation>
+		<translation id="SDK_LoyalPrFavourites">
+			<language code="en">Favourites Link Translated</language>
+			<language code="nl">Favourites Link Translated NL</language>
+		</translation>
+		<translation id="SDK_LoyalPrRecent">
+			<language code="en">Recent Link Translated</language>
+			<language code="nl">Recent Link Translated NL</language>
+		</translation>
+		<!--Quick Menu-->
+		<translation id="SDK_LoyalPrFinancialEntry">
+			<language code="en">Financial Entry Translated</language>
+			<language code="nl">Financial Entry Translated NL</language>
+		</translation>
+		<translation id="SDK_LoyalPrPettyCash">
+			<language code="en">Petty Cash Translated</language>
+			<language code="nl">Petty Cash Translated NL</language>
+		</translation>
+		<!--Application Extensions/ Division Settings-->
+		<!--Button-->
+		<translation id="SDK_LoyalPrMollie">
+			<language code="en">Mollie Translated</language>
+			<language code="nl">Mollie Translated NL</language>
+		</translation>
+		<!--Monitor Item-->
+		<translation id="SDK_LoyalPrQuickLinks">
+			<language code="en">Quick Links Translated</language>
+			<language code="nl">Quick Links Translated NL</language>
+		</translation>
+		<!--Section-->
+		<translation id="SDK_LoyalPrAccountInfoSection">
+			<language code="en">Account Info Section Translated</language>
+			<language code="nl">Account Info Section Translated NL</language>
+		</translation>
+		<!--Field ( link )-->
+		<translation id="SDK_LoyalPrMollieLink">
+			<language code="en">Mollie Link Translated</language>
+			<language code="nl">Mollie Link Translated NL</language>
+		</translation>
+		<!--contentsectionrow-->
+		<translation id="SDK_LoyalPrLoyaltyCard">
+			<language code="en">Loyalty card translated</language>
+			<language code="nl">Loyalty card translated NL</language>
+		</translation>
+		<translation id="SDK_LoyalPrLoyaltyDiscount">
+			<language code="en">Loyalty Discount translated</language>
+			<language code="nl">Loyalty Discount translated NL</language>
+		</translation>
+		<translation id="SDK_LoyalPrActiveLoyaltyCard">
+			<language code="en">Active Loyalty card translated</language>
+			<language code="nl">Active Loyalty card translated NL</language>
+		</translation>
+		<!-- grid -->
+		<translation id="SDK_LoyalPrBankName">
+			<language code="en">Bank name translated</language>
+			<language code="nl">Bank name translated NL</language>
+		</translation>
+		<translation id="SDK_LoyalPrOffsetIban">
+			<language code="en">Offset Iban translated</language>
+			<language code="nl">Offset Iban translated NL</language>
+		</translation>
+		<translation id="SDK_LoyalPrplatinumTranslated">
+			<language code="en">Platinum EN</language>
+			<language code="nl">Platinum NL</language>
+		</translation>
+		<translation id="SDK_LoyalPrGoldTranslated">
+			<language code="en">Gold EN</language>
+			<language code="nl">Gold NL</language>
+		</translation>
+	</translationextensions>
+</extension>
