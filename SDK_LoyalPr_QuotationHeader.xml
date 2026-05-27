@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension code="SDK_LoyalPr" version="1.0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Extensions.xsd">
+<extension code="SDK_LoyalPr" version="1.0.10" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Extensions.xsd">
 	<!--<azurefunctions>
 		<function name="HttpExample" caption="HttpExample test function"  returntype="String">
 			<endpoint>https://extensionsazurefunctest.vault.azure.net/</endpoint>
