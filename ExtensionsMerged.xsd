@@ -1,0 +1,2804 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:simpleType name="idguidtype">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="idtype">
+		<xs:annotation>
+			<xs:documentation>
+				Is the unique identifier.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Za-z_]([A-Za-z0-9_])*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="languagecode">
+		<xs:annotation>
+			<xs:documentation>
+				ISO language code.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[a-z]{2}(-[A-Z]{2})?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="textwithdotallowed">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[\w.]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="textwithdashallowed">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[\w-]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="assemblyorclassnametype">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[^.]([A-Za-z0-9_.])*[^.]"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="majorminorpatchversiontype">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="([0-9]+)\.([0-9]+)\.([0-9]+)"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="nowhitespacestringtype">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Za-z_]([A-Za-z0-9_])*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="existingtype">
+		<xs:annotation>
+			<xs:documentation>
+				Indicates whether an existing standard control is being customized. Set this attribute to true and specify the ID of the standard control to extend. The default is false.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean"/>
+	</xs:simpleType>
+	<xs:simpleType name="showinnewtabtype">
+		<xs:annotation>
+			<xs:documentation>
+				Indicates whether the link should open in a new tab. Use this attribute for non-EOL URLs when the link must open in a new tab.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean"/>
+	</xs:simpleType>
+	<xs:simpleType name="termidtype">
+		<xs:annotation>
+			<xs:documentation>
+				The existing Exact Online term ID that refers to a predefined caption text.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:unsignedInt"/>
+	</xs:simpleType>
+	<xs:simpleType name="featuresettype">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Za-z_]([A-Za-z0-9_])*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="extensioncodetype">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{3,5}_[_A-Za-z0-9]+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="applicationtype">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="([A-Za-z0-9_.-])+\.aspx"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="hreftype">
+		<xs:restriction base="xs:string">
+			<!-- 
+				Allows http:// or https:// 
+				Domain address can have colon : or underscore _
+				Special characters allowed after the hostname are as below.
+					 @%_+.~#?;&/={}()',
+				Other special characters must be escaped.
+				Disallows name with @ before the domain address (e.g. http://myName@www.google.com)
+			-->
+			<xs:pattern value="((http(s)?:\/\/[-a-zA-Z0-9._]{1,256}(:[0-9]{2,6})?(\/?[-a-zA-Z0-9%_\+.~#?;&amp;={}()',&lt;&gt;/:]*)?)|(\/?[-a-zA-Z0-9%_\+.~#;&amp;={}()',&lt;&gt;/]+(\?[-a-zA-Z0-9%_\+.~#;&amp;={}()',&lt;&gt;/:]*)?)?)"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="legislationtype">
+		<xs:annotation>
+			<xs:documentation>
+				Restricts the visibility of the custom UI control to one or more legislations.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:list>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Any"/>
+					<xs:enumeration value="Netherlands"/>
+					<xs:enumeration value="Belgium"/>
+					<xs:enumeration value="Germany"/>
+					<xs:enumeration value="NetherlandsAntilles"/>
+					<xs:enumeration value="Turkey"/>
+					<xs:enumeration value="Luxembourg"/>
+					<xs:enumeration value="UnitedKingdom"/>
+					<xs:enumeration value="France"/>
+					<xs:enumeration value="UnitedStates"/>
+					<xs:enumeration value="Spain"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	<xs:simpleType name="featurechecktype">
+		<xs:annotation>
+			<xs:documentation>
+				Specifies how feature-set checks are evaluated. Supported values are All, Any, and None.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="All"/>
+			<xs:enumeration value="Any"/>
+			<xs:enumeration value="None"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="permissiontype">
+		<xs:annotation>
+			<xs:documentation>
+				Specifies one or more permissions for the action. Supported values are None, View, Update, Create, Delete, and Full.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:list>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="None"/>
+					<xs:enumeration value="View"/>
+					<xs:enumeration value="Update"/>
+					<xs:enumeration value="Create"/>
+					<xs:enumeration value="Delete"/>
+					<xs:enumeration value="Full"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	<xs:simpleType name="propertytypetype">
+		<xs:annotation>
+			<xs:documentation>
+				Represents the data type of the property or column. Supported values are string, boolean, integer, double, date, guid, and numericstring.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="string"/>
+			<xs:enumeration value="boolean"/>
+			<xs:enumeration value="integer"/>
+			<xs:enumeration value="double"/>
+			<xs:enumeration value="date"/>
+			<xs:enumeration value="guid"/>
+			<xs:enumeration value="numericstring"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="customentitypropertytypetype">
+		<xs:annotation>
+			<xs:documentation>
+				Represents the data type of the custom entity property or column. Supported values are string, boolean, integer, double, date, guid, numericstring, and picture.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="string"/>
+			<xs:enumeration value="boolean"/>
+			<xs:enumeration value="integer"/>
+			<xs:enumeration value="double"/>
+			<xs:enumeration value="date"/>
+			<xs:enumeration value="guid"/>
+			<xs:enumeration value="numericstring"/>
+			<xs:enumeration value="picture"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="workflowpropertytypetype">
+		<xs:annotation>
+			<xs:documentation>
+				Represents the data type of the Workflow property or column. Supported values are string, boolean, integer, double, date, guid, numericstring, picture, and attachment.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="string"/>
+			<xs:enumeration value="boolean"/>
+			<xs:enumeration value="integer"/>
+			<xs:enumeration value="double"/>
+			<xs:enumeration value="date"/>
+			<xs:enumeration value="guid"/>
+			<xs:enumeration value="numericstring"/>
+			<xs:enumeration value="picture"/>
+			<xs:enumeration value="attachment"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="settingtype">
+		<xs:annotation>
+			<xs:documentation>
+				Represents the data type of the setting. Supported values are string, boolean, integer, double, date, and numericstring.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="string"/>
+			<xs:enumeration value="boolean"/>
+			<xs:enumeration value="integer"/>
+			<xs:enumeration value="double"/>
+			<xs:enumeration value="date"/>
+			<xs:enumeration value="numericstring"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="fieldtypetype">
+		<xs:annotation>
+			<xs:documentation>
+				Represents the data type of the field. Supported values are string, boolean, integer, double, date, guid, hyperlink, picture, and attachment.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="string"/>
+			<xs:enumeration value="boolean"/>
+			<xs:enumeration value="integer"/>
+			<xs:enumeration value="double"/>
+			<xs:enumeration value="date"/>
+			<xs:enumeration value="guid"/>
+			<xs:enumeration value="hyperlink"/>
+			<xs:enumeration value="picture"/>
+			<xs:enumeration value="attachment"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="gridcolumntypetype">
+		<xs:annotation>
+			<xs:documentation>
+				Represents the data type of the grid column. Supported values are string, boolean, integer, double, date, and guid.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="string"/>
+			<xs:enumeration value="boolean"/>
+			<xs:enumeration value="integer"/>
+			<xs:enumeration value="double"/>
+			<xs:enumeration value="date"/>
+			<xs:enumeration value="guid"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="referstotype">
+		<xs:annotation>
+			<xs:documentation>
+				Specifies the referenced standard entity name. This attribute is used with properties of type guid.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Item"/>
+			<xs:enumeration value="Account"/>
+			<xs:enumeration value="Project"/>
+			<xs:enumeration value="Opportunity"/>
+			<xs:enumeration value="SalesOrder"/>
+			<xs:enumeration value="Contact"/>
+			<xs:enumeration value="User"/>
+			<xs:enumeration value="Employee"/>
+			<xs:enumeration value="Document"/>
+			<xs:enumeration value="GLAccount"/>
+			<xs:enumeration value="Team"/>
+			<xs:enumeration value="Costcenter"/>
+			<xs:enumeration value="Costunit"/>
+			<xs:enumeration value="Journal"/>
+			<xs:enumeration value="Quotation"/>
+			<xs:enumeration value="PurchaseOrder"/>
+			<xs:enumeration value="ShopOrder"/>
+			<xs:enumeration value="Subscription"/>
+			<xs:enumeration value="SalesInvoice"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="controltypetype">
+		<xs:annotation>
+			<xs:documentation>
+				Specifies the control type. Supported values are default, textarea, checkboxlist, list, radiobuttonlist, and inputfield.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="default"/>
+			<xs:enumeration value="textarea"/>
+			<xs:enumeration value="checkboxlist"/>
+			<xs:enumeration value="list"/>
+			<xs:enumeration value="radiobuttonlist"/>
+			<xs:enumeration value="inputfield"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="fieldcontroltype">
+		<xs:annotation>
+			<xs:documentation>
+				Specifies the field control type. Supported values are default, textarea, list, radiobuttonlist, and inputfield.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="default"/>
+			<xs:enumeration value="textarea"/>
+			<xs:enumeration value="list"/>
+			<xs:enumeration value="radiobuttonlist"/>
+			<xs:enumeration value="inputfield"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="custompropertyrelationtype">
+		<xs:annotation>
+			<xs:documentation>
+				Specifies the relation type for a functional component extension. Currently only ExpressionDefault is supported.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:list>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="ExpressionDefault"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	<xs:simpleType name="megamenuidtype">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="MegaMenu"/>
+			<xs:enumeration value="MegaMenuLocked"/>
+			<xs:enumeration value="MegaMenuViewUser"/>
+			<xs:enumeration value="MegaMenuInvoiceUser"/>
+			<xs:enumeration value="MegaMenuApproverUser"/>
+			<xs:enumeration value="MegaMenuClient"/>
+			<xs:enumeration value="MegaMenuDeclaration"/>
+			<xs:enumeration value="MegaMenuESS"/>
+			<xs:enumeration value="MegaMenuExactGo"/>
+			<xs:enumeration value="MegaMenuInvoiceUserE4B"/>
+			<xs:enumeration value="MegaMenuTBPortal"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="quickmenuidtype">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Accountancy"/>
+			<xs:enumeration value="Accounting"/>
+			<xs:enumeration value="Manufacturing"/>
+			<xs:enumeration value="PS"/>
+			<xs:enumeration value="Wholesale"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="returntypetype">
+		<xs:annotation>
+			<xs:documentation>
+				Specifies the Azure function return type. Supported values are Bool, Int, Long, Double, String, and DateTime.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:list>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Bool"/>
+					<xs:enumeration value="Int"/>
+					<xs:enumeration value="Long"/>
+					<xs:enumeration value="Double"/>
+					<xs:enumeration value="String"/>
+					<xs:enumeration value="DateTime"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	<xs:simpleType name="propertyStates">
+		<xs:annotation>
+			<xs:documentation>
+				Specifies one or more property states: None, AfterAddNew, BeforeInsert, BeforeUpdate, OnValidate, Fixed, Overwrite, AfterEdit, or AfterCopy. Separate multiple values with a space.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:list>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="None"/>
+					<xs:enumeration value="AfterAddNew"/>
+					<xs:enumeration value="BeforeInsert"/>
+					<xs:enumeration value="BeforeUpdate"/>
+					<xs:enumeration value="OnValidate"/>
+					<xs:enumeration value="Fixed"/>
+					<xs:enumeration value="Overwrite"/>
+					<xs:enumeration value="AfterEdit"/>
+					<xs:enumeration value="AfterCopy"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	<xs:simpleType name="stagetypetype">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="None"/>
+			<xs:enumeration value="New"/>
+			<xs:enumeration value="Canceled"/>
+			<xs:enumeration value="Restarted"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="powerbireportembeddedlink">
+		<xs:annotation>
+			<xs:documentation>
+				The report link to embed. Make sure the URL is XML-escaped: every ampersand symbol must be written as &amp;.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="hreftype">
+			<xs:pattern value="(http[s]?:\/\/)(app.powerbi.com\/reportEmbed\?)(.{0,})"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="googlesheetsembeddedlink">
+		<xs:annotation>
+			<xs:documentation>
+				URL of the Google Sheets document to embed. Obtain the URL from File > Share > Embed. The URL must start with docs.google.com.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="hreftype">
+			<xs:pattern value="(http[s]?:\/\/)(docs.google.com\/spreadsheets\/d\/)(.{0,})"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="listitemstringtype">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[^,;]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="translationidtype">
+		<xs:annotation>
+			<xs:documentation>
+				Unique ID that refers to a translation defined in the translationextensions element in the XML.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="nowhitespacestringtype">
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="sqltablecolumnlength">
+		<xs:restriction base="nowhitespacestringtype">
+			<xs:maxLength value="124"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="deleteactiontype">
+		<xs:annotation>
+			<xs:documentation>
+				Specifies the delete behavior for a property that references another entity. Supported values are setnull and restrict.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:list>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="setnull"/>
+					<xs:enumeration value="restrict"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	<xs:simpleType name="stringmaxlength255">
+		<xs:annotation>
+			<xs:documentation>
+				Maximum length of the value is 255 characters.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="stringmaxlength60">
+		<xs:annotation>
+			<xs:documentation>
+				Maximum length of the value is 60 characters.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="60"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="unsignedinttype4000">
+		<xs:annotation>
+			<xs:documentation>
+				An unsigned integer between 1 and 4000, used to specify the maximum length of a string property
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:unsignedInt">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="4000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="unsignedinttype10">
+		<xs:annotation>
+			<xs:documentation>
+				A number from 0 to 10, available for double properties and columns, representing the number of digits after the decimal separator.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:unsignedInt">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="mandatoryfeaturesetstype">
+		<xs:annotation>
+			<xs:documentation>
+				Feature sets that must be enabled for the UI control to be shown.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="featureset" type="featuresettype" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="forbiddenfeaturesetstype">
+		<xs:annotation>
+			<xs:documentation>
+				Feature sets that prevent the UI control from being shown.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="featureset" type="featuresettype" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="azurefunctionstype">
+		<xs:annotation>
+			<xs:documentation>
+				Contains definitions of Azure functions that can be called from extensions.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="function" type="functiontype" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="functiontype">
+		<xs:sequence>
+			<xs:element name="endpoint" type="hreftype" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						Endpoint URL of the Azure function hosted in Azure.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="authorization" minOccurs="1">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:choice>
+							<xs:element name="keyvault">
+								<xs:complexType>
+									<xs:attribute name="endpoint" type="xs:string" use="required">
+										<xs:annotation>
+											<xs:documentation>
+												Vault URI of the Azure Key Vault, for example: https://{keyvault-name}.vault.azure.net/
+											</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="secret" type="xs:string" use="required">
+										<xs:annotation>
+											<xs:documentation>
+												Name of the secret stored in Azure Key Vault. Key Vault provides secure storage for secrets such as passwords and connection strings.
+											</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="apikey" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>
+										Azure Function API key as configured in the Azure portal for the function. Specify either an API key or a Key Vault reference.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:choice>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="parameters">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="parameter" minOccurs="1" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:attribute name="name" type="xs:string" use="required">
+									<xs:annotation>
+										<xs:documentation>
+											Azure Function parameter name.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="caption" type="xs:string" use="required">
+									<xs:annotation>
+										<xs:documentation>
+											Parameter caption shown in the Expression Editor Azure Function signature.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="required" type="xs:boolean" use="optional">
+									<xs:annotation>
+										<xs:documentation>
+											Boolean value that indicates whether the parameter is mandatory.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>
+					The name of the Azure function as defined in Azure.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="caption" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>
+					Caption of the Azure function.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="returntype" type="returntypetype" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="entitiestype">
+		<xs:annotation>
+			<xs:documentation>
+				Contains definitions of extended entity properties and extension tables.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="entity" type="entitytype" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="entitytype">
+		<xs:annotation>
+			<xs:documentation>
+				Definition of an entity to be extended.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="property" type="propertytype" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="nowhitespacestringtype" use="required">
+			<xs:annotation>
+				<xs:documentation>
+					Logical name of the entity to be extended. This name is user-defined and must follow the identifier pattern allowed by the schema.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="table" type="sqltablecolumnlength" use="required">
+			<xs:annotation>
+				<xs:documentation>
+					Name of the Exact Online table to be extended.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="extensiontable" type="sqltablecolumnlength" use="required">
+			<xs:annotation>
+				<xs:documentation>
+					Name of the new extension table. The table is created automatically based on the extension configuration.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="businesscomponent" type="nowhitespacestringtype" use="required">
+			<xs:annotation>
+				<xs:documentation>
+					Name of the business component to be extended.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="propertytype">
+		<xs:annotation>
+			<xs:documentation>
+				Defines an extension property, including its SQL column metadata and related business component property.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="listitems" type="listitemstype" minOccurs="0" maxOccurs="1">
+				<xs:unique name="unique_value">
+					<xs:selector xpath="listitem"/>
+					<xs:field xpath="@value"/>
+				</xs:unique>
+			</xs:element>
+			<xs:element name="einvoiceelement" type="einvoiceelementtype" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="nowhitespacestringtype" use="required">
+			<xs:annotation>
+				<xs:documentation>
+					Name of the property in the business component. It must be prefixed with the solution code.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="columnname" type="sqltablecolumnlength" use="required">
+			<xs:annotation>
+				<xs:documentation>
+					Name of the column in the SQL table.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="caption" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>
+					Text displayed for the custom control.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="captionid" type="termidtype" use="optional"/>
+		<xs:attribute name="translationid" type="translationidtype" use="optional"/>
+		<xs:attribute name="type" type="propertytypetype" use="required"/>
+		<xs:attribute name="length" type="unsignedinttype4000" use="optional"/>
+		<xs:attribute name="refersto" type="referstotype" use="optional"/>
+		<xs:attribute name="allowempty" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					Indicates whether the property is optional. The default is true.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="scale" type="unsignedinttype10" use="optional"/>
+		<xs:attribute name="propertyStates" type="propertyStates" use="optional"/>
+		<xs:attribute name="deleteaction" type="deleteactiontype" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="listitemstype">
+		<xs:annotation>
+			<xs:documentation>
+				Defines a list of selectable values for a property, typically for string or integer properties.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="listitem" minOccurs="1" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="value" type="listitemstringtype" use="required"/>
+					<xs:attribute name="caption" type="listitemstringtype" use="optional"/>
+					<xs:attribute name="captionid" type="termidtype" use="optional"/>
+					<xs:attribute name="translationid" type="translationidtype" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="allowempty" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					Indicates whether the list value may be left empty. The default is true.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="listdefinitionid" type="nowhitespacestringtype" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="businesscomponentextensionstype">
+		<xs:annotation>
+			<xs:documentation>
+				Contains extensions for business components, such as validations, referenced properties, and expression-based defaults.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="businesscomponent" type="businesscomponenttype" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="businesscomponenttype">
+		<xs:annotation>
+			<xs:documentation>
+				Defines extensions for a business component, including custom validations, referenced properties, and expression-based defaults.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="azurevalidations" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						Custom functional component validations that are executed by Azure functions.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="functionalcomponent" minOccurs="0" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+									<xs:element minOccurs="0" maxOccurs="unbounded" name="inputproperty">
+										<xs:complexType>
+											<xs:attribute name="property" type="nowhitespacestringtype" use="required"/>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="targetproperty" type="nowhitespacestringtype" use="required">
+									<xs:annotation>
+										<xs:documentation>
+											Name of the property that must be validated.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="azureoperationname" type="nowhitespacestringtype" use="required">
+									<xs:annotation>
+										<xs:documentation>
+											Name of the Azure function operation that performs the validation.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="azurefunctionendpoint" type="xs:anyURI" use="required">
+						<xs:annotation>
+							<xs:documentation>
+								Endpoint of the Azure function hosted in Azure.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="azuresecretref" type="textwithdashallowed" use="optional">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the secret in the Exact-managed Key Vault that stores the API key used to communicate with the Azure function.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="apikey" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation>
+								API key used to communicate with the Azure function, as configured in the Azure portal.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+				<!-- Validate either azuresecretref or apikey attribute specified (but not both). -->
+				<xs:key name="AzureSecretRefOrApiKey">
+					<xs:selector xpath="."/>
+					<xs:field xpath="@azuresecretref | @apikey"/>
+				</xs:key>
+			</xs:element>
+			<xs:element name="references" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						Defines referenced properties that extend a business component.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="reference" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									Extend business components with the use of referenced properties.
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="property" minOccurs="0" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:sequence>
+											</xs:sequence>
+											<xs:attribute name="name" type="nowhitespacestringtype" use="required">
+												<xs:annotation>
+													<xs:documentation>
+														Name of the referenced property. It must start with the child business component name used in the forproperty attribute, followed by an underscore (_), and then the property name. The property name should match the data column name and be available for expressions.
+													</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="columnname" type="nowhitespacestringtype" use="required">
+												<xs:annotation>
+													<xs:documentation>
+														Name of the column in the SQL table.
+													</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="caption" type="xs:string" use="optional">
+												<xs:annotation>
+													<xs:documentation>
+														Text displayed for the property.
+													</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="captionid" type="termidtype" use="optional"/>
+											<xs:attribute name="translationid" type="translationidtype" use="optional"/>
+											<xs:attribute name="domainid" type="idguidtype" use="optional"/>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="forproperty" type="nowhitespacestringtype" use="required">
+									<xs:annotation>
+										<xs:documentation>
+											Name of the business component property to extend with referenced properties.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="functionalcomponent" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						Defines an expression-based default for a business component property.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence maxOccurs="1" minOccurs="0">
+						<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="expression" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>
+									Expression evaluated at runtime. Expressions are Excel-like formulas that may contain calculations, context-specific properties, and functions.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="type" type="custompropertyrelationtype" use="required"/>
+					<xs:attribute name="targetproperty" type="nowhitespacestringtype" use="required">
+						<xs:annotation>
+							<xs:documentation>
+								Name of the business component property for which the default value is specified.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="class" type="assemblyorclassnametype" use="optional"/>
+					<xs:attribute name="assembly" type="assemblyorclassnametype" use="optional"/>
+					<xs:attribute name="version" type="majorminorpatchversiontype" use="optional"/>
+					<xs:attribute name="propertyStates" type="propertyStates" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="name" type="nowhitespacestringtype" use="required">
+			<xs:annotation>
+				<xs:documentation>
+					Name of the business component being extended.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="megamenuextensionstype">
+		<xs:annotation>
+			<xs:documentation>
+				The mega menu is the main menu shown in the navigation bar at the top of the Exact Online Premium page.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="megamenuextension" type="megamenuextensiontype" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="megamenuextensiontype">
+		<xs:annotation>
+			<xs:documentation>
+				Defines a mega menu extension.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="tab">
+				<xs:annotation>
+					<xs:documentation>
+						Defines a mega menu tab, either by extending an existing tab or by adding a new one.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="mandatoryfeaturesets" type="mandatoryfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="forbiddenfeaturesets" type="forbiddenfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="featurecheck" type="featurechecktype" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="mandatorylegislation" type="legislationtype" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="visibleexpression" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="functionpoint" type="xs:string" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="permission" type="permissiontype" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="section" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									Defines a section within a mega menu tab.
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="mandatoryfeaturesets" type="mandatoryfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="forbiddenfeaturesets" type="forbiddenfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="featurecheck" type="featurechecktype" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="mandatorylegislation" type="legislationtype" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="visibleexpression" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="functionpoint" type="xs:string" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="permission" type="permissiontype" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+									<xs:element minOccurs="0" maxOccurs="unbounded" name="subsection">
+										<xs:annotation>
+											<xs:documentation>
+												Defines a subsection within a mega menu section.
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="mandatorylegislation" type="legislationtype" minOccurs="0" maxOccurs="1"/>
+												<xs:element name="mandatoryfeaturesets" type="mandatoryfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+												<xs:element name="forbiddenfeaturesets" type="forbiddenfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+												<xs:element name="featurecheck" type="featurechecktype" minOccurs="0" maxOccurs="1"/>
+												<xs:element name="visibleexpression" minOccurs="0" maxOccurs="1"/>
+												<xs:element name="functionpoint" type="xs:string" minOccurs="0" maxOccurs="1"/>
+												<xs:element name="permission" type="permissiontype" minOccurs="0" maxOccurs="1"/>
+												<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+												<xs:element minOccurs="0" maxOccurs="unbounded" name="link">
+													<xs:annotation>
+														<xs:documentation>
+															Defines a clickable menu item whose destination is specified by the href attribute.
+														</xs:documentation>
+													</xs:annotation>
+													<xs:complexType>
+														<xs:all minOccurs="0">
+															<xs:element name="mandatoryfeaturesets" type="mandatoryfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+															<xs:element name="forbiddenfeaturesets" type="forbiddenfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+															<xs:element name="featurecheck" type="featurechecktype" minOccurs="0" maxOccurs="1"/>
+															<xs:element name="mandatorylegislation" type="legislationtype" minOccurs="0" maxOccurs="1"/>
+															<xs:element name="visibleexpression" minOccurs="0" maxOccurs="1"/>
+															<xs:element name="functionpoint" type="xs:string" minOccurs="0" maxOccurs="1"/>
+															<xs:element name="permission" type="permissiontype" minOccurs="0" maxOccurs="1"/>
+															<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+														</xs:all>
+														<xs:attribute name="id" type="idtype" use="required"/>
+														<xs:attribute name="caption" type="xs:string" use="optional">
+															<xs:annotation>
+																<xs:documentation>
+																	Sets the text to be displayed for the custom control.
+																</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+														<xs:attribute name="captionid" type="termidtype" use="optional"/>
+														<xs:attribute name="href" type="hreftype" use="optional"/>
+														<xs:attribute name="showinnewtab" type="showinnewtabtype" use="optional"/>
+														<xs:attribute name="existing" type="existingtype" use="required"/>
+														<xs:attribute name="translationid" type="translationidtype" use="optional"/>
+													</xs:complexType>
+												</xs:element>
+												<xs:element minOccurs="0" maxOccurs="unbounded" name="powerbilink">
+													<xs:annotation>
+														<xs:documentation>
+															Defines a menu item that opens an embedded Power BI report.
+														</xs:documentation>
+													</xs:annotation>
+													<xs:complexType>
+														<xs:all minOccurs="1">
+															<xs:element name="powerbireportembedlink" type="powerbireportembeddedlink" minOccurs="1" maxOccurs="1"/>
+															<xs:element name="pagetitle" type="xs:string" minOccurs="0" maxOccurs="1">
+																<xs:annotation>
+																	<xs:documentation>
+																		(Optional) Title displayed at the top of the embedded page. When omitted, the default title "Power BI Report" is used.
+																	</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+															<xs:element name="mandatoryfeaturesets" type="mandatoryfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+															<xs:element name="forbiddenfeaturesets" type="forbiddenfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+															<xs:element name="featurecheck" type="featurechecktype" minOccurs="0" maxOccurs="1"/>
+															<xs:element name="mandatorylegislation" type="legislationtype" minOccurs="0" maxOccurs="1"/>
+															<xs:element name="visibleexpression" minOccurs="0" maxOccurs="1"/>
+															<xs:element name="functionpoint" type="xs:string" minOccurs="0" maxOccurs="1"/>
+															<xs:element name="permission" type="permissiontype" minOccurs="0" maxOccurs="1"/>
+															<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+														</xs:all>
+														<xs:attribute name="id" type="idtype" use="required"/>
+														<xs:attribute name="caption" type="xs:string" use="required">
+															<xs:annotation>
+																<xs:documentation>
+																	Sets the text to be displayed for the custom control.
+																</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+														<xs:attribute name="captionid" type="termidtype" use="optional"/>
+													</xs:complexType>
+												</xs:element>
+												<xs:element minOccurs="0" maxOccurs="unbounded" name="googlesheetslink">
+													<xs:annotation>
+														<xs:documentation>
+															Defines a menu item that opens a dedicated Exact Online Premium page for embedding Google Sheets.
+														</xs:documentation>
+													</xs:annotation>
+													<xs:complexType>
+														<xs:all minOccurs="1">
+															<xs:element name="googlesheetsembedlink" type="googlesheetsembeddedlink" minOccurs="1" maxOccurs="1"/>
+															<xs:element name="pagetitle" type="xs:string" minOccurs="0" maxOccurs="1">
+																<xs:annotation>
+																	<xs:documentation>
+																		(Optional) Title displayed at the top of the embedded page. When omitted, the default title "Google Sheets" is used.
+																	</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+															<xs:element name="mandatoryfeaturesets" type="mandatoryfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+															<xs:element name="forbiddenfeaturesets" type="forbiddenfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+															<xs:element name="featurecheck" type="featurechecktype" minOccurs="0" maxOccurs="1"/>
+															<xs:element name="mandatorylegislation" type="legislationtype" minOccurs="0" maxOccurs="1"/>
+															<xs:element name="visibleexpression" minOccurs="0" maxOccurs="1"/>
+															<xs:element name="functionpoint" type="xs:string" minOccurs="0" maxOccurs="1"/>
+															<xs:element name="permission" type="permissiontype" minOccurs="0" maxOccurs="1"/>
+															<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+														</xs:all>
+														<xs:attribute name="id" type="idtype" use="required"/>
+														<xs:attribute name="caption" type="xs:string" use="required">
+															<xs:annotation>
+																<xs:documentation>
+																	Sets the text to be displayed for the custom control.
+																</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+														<xs:attribute name="captionid" type="termidtype" use="optional"/>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+											<xs:attribute name="id" type="idtype" use="required"/>
+											<xs:attribute name="caption" type="xs:string" use="optional">
+												<xs:annotation>
+													<xs:documentation>
+														Sets the text to be displayed for the custom control.
+													</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="captionid" type="termidtype" use="optional"/>
+											<xs:attribute name="existing" type="existingtype" use="required"/>
+											<xs:attribute name="translationid" type="translationidtype" use="optional"/>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="id" type="idtype" use="required"/>
+								<xs:attribute name="caption" type="xs:string" use="optional">
+									<xs:annotation>
+										<xs:documentation>
+											Sets the text to be displayed for the custom control.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="captionid" type="termidtype" use="optional"/>
+								<xs:attribute name="existing" type="existingtype" use="required"/>
+								<xs:attribute name="translationid" type="translationidtype" use="optional"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="id" type="idtype" use="required"/>
+					<xs:attribute name="caption" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation>
+								Sets the text to be displayed for the custom control.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="captionid" type="termidtype" use="optional"/>
+					<xs:attribute name="existing" type="existingtype" use="required"/>
+					<xs:attribute name="translationid" type="translationidtype" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="menuid" type="megamenuidtype" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="quickmenuextensionstype">
+		<xs:annotation>
+			<xs:documentation>
+				The quick menu provides faster navigation through the Create menu in the top-right corner of the Exact Online navigation bar.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="quickmenuextension" type="quickmenuextensiontype" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="quickmenuextensiontype">
+		<xs:annotation>
+			<xs:documentation>
+				Defines a quick menu extension.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="subsection">
+				<xs:annotation>
+					<xs:documentation>
+						Defines a subsection within a quick menu.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="mandatorylegislation" type="legislationtype" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="mandatoryfeaturesets" type="mandatoryfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="forbiddenfeaturesets" type="forbiddenfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="featurecheck" type="featurechecktype" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="visibleexpression" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="functionpoint" type="xs:string" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="permission" type="permissiontype" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+						<xs:element minOccurs="0" maxOccurs="unbounded" name="link">
+							<xs:annotation>
+								<xs:documentation>
+									Defines a clickable menu item whose destination is specified by the href attribute.
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType mixed="true">
+								<xs:all>
+									<xs:element name="mandatorylegislation" type="legislationtype" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="mandatoryfeaturesets" type="mandatoryfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="forbiddenfeaturesets" type="forbiddenfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="featurecheck" type="featurechecktype" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="visibleexpression" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="functionpoint" type="xs:string" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="permission" type="permissiontype" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+								</xs:all>
+								<xs:attribute name="id" type="idtype" use="required"/>
+								<xs:attribute name="caption" type="xs:string" use="optional">
+									<xs:annotation>
+										<xs:documentation>
+											Sets the text to be displayed for the custom control.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="captionid" type="termidtype" use="optional"/>
+								<xs:attribute name="href" type="hreftype" use="optional"/>
+								<xs:attribute name="showinnewtab" type="showinnewtabtype" use="optional"/>
+								<xs:attribute name="existing" type="existingtype" use="required"/>
+								<xs:attribute name="translationid" type="translationidtype" use="optional"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="id" type="idtype" use="required"/>
+					<xs:attribute name="caption" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation>
+								Sets the text to be displayed for the custom control.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="captionid" type="termidtype" use="optional"/>
+					<xs:attribute name="existing" type="existingtype" use="required"/>
+					<xs:attribute name="translationid" type="translationidtype" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="menuid" type="quickmenuidtype" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="companysettingsextensionstype">
+		<xs:annotation>
+			<xs:documentation>
+				Extends company settings by defining custom settings and optional default values.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="tab" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						Defines a tab in company settings, either by extending an existing tab or by adding a new one.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="mandatoryfeaturesets" type="mandatoryfeaturesetstype" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element name="forbiddenfeaturesets" type="forbiddenfeaturesetstype" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element name="featurecheck" type="featurechecktype" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="mandatorylegislation" type="legislationtype" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="section" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									Defines a section that groups settings within a company settings tab.
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="mandatoryfeaturesets" type="mandatoryfeaturesetstype" minOccurs="0" maxOccurs="unbounded"/>
+									<xs:element name="forbiddenfeaturesets" type="forbiddenfeaturesetstype" minOccurs="0" maxOccurs="unbounded"/>
+									<xs:element name="featurecheck" type="featurechecktype" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="mandatorylegislation" type="legislationtype" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="setting" minOccurs="0" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>
+												Defines a custom setting. The setting ID must be prefixed with the extension solution code. An optional default value can be specified with the defaultvalue attribute.
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:attribute name="id" type="idtype" use="required"/>
+											<xs:attribute name="caption" type="xs:string" use="required">
+												<xs:annotation>
+													<xs:documentation>
+														Sets the text to be displayed for the custom control.
+													</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="captionid" type="termidtype" use="optional"/>
+											<xs:attribute name="translationid" type="translationidtype" use="optional"/>
+											<xs:attribute name="type" type="settingtype" use="required"/>
+											<xs:attribute name="length" type="unsignedinttype4000" use="optional"/>
+											<xs:attribute name="defaultvalue" type="xs:string" use="optional"/>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="id" type="idtype" use="required"/>
+								<xs:attribute name="existing" type="existingtype" use="required"/>
+								<xs:attribute name="caption" type="xs:string" use="optional">
+									<xs:annotation>
+										<xs:documentation>
+											Sets the text to be displayed for the custom control.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="captionid" type="termidtype" use="optional"/>
+								<xs:attribute name="translationid" type="translationidtype" use="optional"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="id" type="idtype" use="required"/>
+					<xs:attribute name="existing" type="existingtype" use="required"/>
+					<xs:attribute name="caption" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation>
+								Sets the text to be displayed for the custom control.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="captionid" type="termidtype" use="optional"/>
+					<xs:attribute name="translationid" type="translationidtype" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="translationextensionstype">
+		<xs:annotation>
+			<xs:documentation>
+				Contains translations for captions used in custom UI elements. A translation is referenced through the translationid attribute.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="translation" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						Defines a translation entry identified by an ID that is referenced by UI elements or extension properties.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="language" minOccurs="0" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="xs:string">
+										<xs:attribute name="code" type="languagecode" use="required"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="id" type="translationidtype" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="applicationextensionstype">
+		<xs:annotation>
+			<xs:documentation>
+				Contains extensions for standard Exact Online Premium .aspx pages.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="applicationextension" type="applicationextensiontype" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="cardsectiontype">
+		<xs:annotation>
+			<xs:documentation>
+				Defines a card section, either by extending an existing section or by adding a new one.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="mandatorylegislation" type="legislationtype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="mandatoryfeaturesets" type="mandatoryfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="forbiddenfeaturesets" type="forbiddenfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="featurecheck" type="featurechecktype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="visibleexpression" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="field" type="fieldtype" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="id" type="idtype" use="required"/>
+		<xs:attribute name="existing" type="existingtype" use="required"/>
+		<xs:attribute name="caption" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					Text displayed for the card section.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="captionid" type="termidtype" use="optional"/>
+		<xs:attribute name="translationid" type="translationidtype" use="optional"/>
+		<xs:attribute name="positionbefore" type="idtype" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="contentsectionrowtype">
+		<xs:annotation>
+			<xs:documentation>
+				Defines a content section row that can extend an existing row or add a new one to a card page.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="mandatorylegislation" type="legislationtype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="mandatoryfeaturesets" type="mandatoryfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="forbiddenfeaturesets" type="forbiddenfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="featurecheck" type="featurechecktype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="visibleexpression" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="field" type="fieldtype" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="id" type="idtype" use="required"/>
+		<xs:attribute name="existing" type="existingtype" use="required"/>
+		<xs:attribute name="caption" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					Text displayed for the content section row.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="captionid" type="termidtype" use="optional"/>
+		<xs:attribute name="translationid" type="translationidtype" use="optional"/>
+		<xs:attribute name="positionbefore" type="idtype" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="gridpageheadertype">
+		<xs:annotation>
+			<xs:documentation>
+				Custom fields can be added to the header area of a grid page by using the gridpageheader element.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="mandatorylegislation" type="legislationtype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="mandatoryfeaturesets" type="mandatoryfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="forbiddenfeaturesets" type="forbiddenfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="featurecheck" type="featurechecktype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="visibleexpression" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="section" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						Defines a section in the grid page header. A section can extend an existing section by referring to its ID or add a new section by using a new ID.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="mandatorylegislation" type="legislationtype" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="mandatoryfeaturesets" type="mandatoryfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="forbiddenfeaturesets" type="forbiddenfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="featurecheck" type="featurechecktype" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="visibleexpression" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="field" type="gridpageheaderfieldtype" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+					<xs:attribute name="id" type="idtype" use="required"/>
+					<xs:attribute name="existing" type="existingtype" use="required"/>
+					<xs:attribute name="positionbefore" type="idtype" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="filterblocktype">
+		<xs:annotation>
+			<xs:documentation>
+				Defines filter blocks for overview pages. Existing filter blocks can be extended with custom filter fields, but new filter blocks cannot be created.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="filter" type="filtertype" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="columngrouptype">
+		<xs:annotation>
+			<xs:documentation>
+				Defines a column group for reporting framework pages, such as overview pages.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="mandatorylegislation" type="legislationtype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="mandatoryfeaturesets" type="mandatoryfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="forbiddenfeaturesets" type="forbiddenfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="featurecheck" type="featurechecktype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="join" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						Creates a join to an extension table.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="forcolumn" type="nowhitespacestringtype" use="optional">
+						<xs:annotation>
+							<xs:documentation>
+								Specifies the column of the extension table to join on.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="extensiontable" type="sqltablecolumnlength" use="required">
+						<xs:annotation>
+							<xs:documentation>
+								Specifies the extension table to use.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="column" type="columntype" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="id" type="idtype" use="required"/>
+		<xs:attribute name="caption" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					Text displayed for the column group.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="captionid" type="termidtype" use="optional"/>
+		<xs:attribute name="translationid" type="translationidtype" use="optional"/>
+		<xs:attribute name="existing" type="existingtype" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="fieldtype">
+		<xs:annotation>
+			<xs:documentation>
+				Defines a custom field that can be added to a card page.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="mandatorylegislation" type="legislationtype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="mandatoryfeaturesets" type="mandatoryfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="forbiddenfeaturesets" type="forbiddenfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="featurecheck" type="featurechecktype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="visibleexpression" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+		</xs:all>
+		<xs:attribute name="id" type="idtype" use="optional"/>
+		<xs:attribute name="type" type="fieldtypetype" use="optional"/>
+		<xs:attribute name="length" type="unsignedinttype4000" use="optional"/>
+		<xs:attribute name="refersto" type="referstotype" use="optional"/>
+		<xs:attribute name="caption" type="xs:string" use="optional"/>
+		<xs:attribute name="captionid" type="termidtype" use="optional"/>
+		<xs:attribute name="translationid" type="translationidtype" use="optional"/>
+		<xs:attribute name="href" type="hreftype" use="optional"/>
+		<xs:attribute name="showinnewtab" type="showinnewtabtype" use="optional"/>
+		<xs:attribute name="readonly" type="xs:boolean" use="optional"/>
+		<xs:attribute name="controltype" type="fieldcontroltype" use="optional"/>
+		<xs:attribute name="datafield" type="nowhitespacestringtype" use="optional"/>
+		<xs:attribute name="datasource" type="nowhitespacestringtype" use="optional"/>
+		<xs:attribute name="existing" type="existingtype" use="optional"/>
+		<xs:attribute name="positionbefore" type="idtype" use="optional"/>
+		<xs:attribute name="rows" type="xs:unsignedInt" use="optional"/>
+		<xs:attribute name="width" type="xs:unsignedInt" use="optional"/>
+		<xs:attribute name="listdefinitionid" type="nowhitespacestringtype" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="gridpageheaderfieldtype">
+		<xs:annotation>
+			<xs:documentation>
+				Defines a custom field that can be added to a grid page header.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="mandatorylegislation" type="legislationtype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="mandatoryfeaturesets" type="mandatoryfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="forbiddenfeaturesets" type="forbiddenfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="featurecheck" type="featurechecktype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="visibleexpression" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+		</xs:all>
+		<xs:attribute name="id" type="idtype" use="optional"/>
+		<xs:attribute name="type" type="gridcolumntypetype" use="optional"/>
+		<xs:attribute name="length" type="unsignedinttype4000" use="optional"/>
+		<xs:attribute name="refersto" type="referstotype" use="optional"/>
+		<xs:attribute name="caption" type="xs:string" use="optional"/>
+		<xs:attribute name="captionid" type="termidtype" use="optional"/>
+		<xs:attribute name="translationid" type="translationidtype" use="optional"/>
+		<xs:attribute name="readonly" type="xs:boolean" use="optional"/>
+		<xs:attribute name="controltype" type="controltypetype" use="optional"/>
+		<xs:attribute name="listdefinitionid" type="nowhitespacestringtype" use="optional"/>
+		<xs:attribute name="datafield" type="nowhitespacestringtype" use="optional"/>
+		<xs:attribute name="datasource" type="nowhitespacestringtype" use="optional"/>
+		<xs:attribute name="existing" type="existingtype" use="optional"/>
+		<xs:attribute name="positionbefore" type="idtype" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="filtertype">
+		<xs:annotation>
+			<xs:documentation>
+				Defines a filter field that can be added to the filter block of an overview page.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="mandatorylegislation" type="legislationtype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="mandatoryfeaturesets" type="mandatoryfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="forbiddenfeaturesets" type="forbiddenfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="featurecheck" type="featurechecktype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="visibleexpression" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+		</xs:all>
+		<xs:attribute name="id" type="idtype" use="required"/>
+		<xs:attribute name="type" type="fieldtypetype" use="optional"/>
+		<xs:attribute name="length" type="unsignedinttype4000" use="optional"/>
+		<xs:attribute name="refersto" type="referstotype" use="optional"/>
+		<xs:attribute name="caption" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					Text displayed for the filter field.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="captionid" type="termidtype" use="optional"/>
+		<xs:attribute name="translationid" type="translationidtype" use="optional"/>
+		<xs:attribute name="controltype" type="controltypetype" use="optional"/>
+		<xs:attribute name="listdefinitionid" type="nowhitespacestringtype" use="optional"/>
+		<xs:attribute name="existing" type="existingtype" use="optional"/>
+		<xs:attribute name="positionbefore" type="idtype" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="columntype">
+		<xs:annotation>
+			<xs:documentation>
+				Defines a custom column that can be added to a column group.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="mandatorylegislation" type="legislationtype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="mandatoryfeaturesets" type="mandatoryfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="forbiddenfeaturesets" type="forbiddenfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="featurecheck" type="featurechecktype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="visibleexpression" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+		</xs:all>
+		<xs:attribute name="id" type="idtype" use="optional"/>
+		<xs:attribute name="type" type="fieldtypetype" use="optional"/>
+		<xs:attribute name="refersto" type="referstotype" use="optional"/>
+		<xs:attribute name="caption" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					Text displayed for the column.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="captionid" type="termidtype" use="optional"/>
+		<xs:attribute name="translationid" type="translationidtype" use="optional"/>
+		<xs:attribute name="field" type="nowhitespacestringtype" use="optional"/>
+		<xs:attribute name="filterid" type="idtype" use="optional"/>
+		<xs:attribute name="controltype" type="controltypetype" use="optional"/>
+		<xs:attribute name="listdefinitionid" type="nowhitespacestringtype" use="optional"/>
+		<xs:attribute name="existing" type="existingtype" use="optional"/>
+		<xs:attribute name="scale" type="unsignedinttype10" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="gridcolumntype">
+		<xs:annotation>
+			<xs:documentation>
+				Defines a grid column that can be added to a grid page or used to extend an existing grid column.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="mandatorylegislation" type="legislationtype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="mandatoryfeaturesets" type="mandatoryfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="forbiddenfeaturesets" type="forbiddenfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="featurecheck" type="featurechecktype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="visibleexpression" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+		</xs:all>
+		<xs:attribute name="id" type="idtype" use="optional"/>
+		<xs:attribute name="datafield" type="nowhitespacestringtype" use="optional"/>
+		<xs:attribute name="datasource" type="nowhitespacestringtype" use="optional"/>
+		<xs:attribute name="type" type="gridcolumntypetype" use="optional"/>
+		<xs:attribute name="length" type="unsignedinttype4000" use="optional"/>
+		<xs:attribute name="caption" type="xs:string" use="optional"/>
+		<xs:attribute name="captionid" type="termidtype" use="optional"/>
+		<xs:attribute name="translationid" type="translationidtype" use="optional"/>
+		<xs:attribute name="readonly" type="xs:boolean" use="optional"/>
+		<xs:attribute name="positionbefore" type="idtype" use="optional"/>
+		<xs:attribute name="width" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					(Optional) Absolute or relative width of the column, for example 60, 60px, or 20%.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="controltype" type="controltypetype" use="optional"/>
+		<xs:attribute name="listdefinitionid" type="nowhitespacestringtype" use="optional"/>
+		<xs:attribute name="existing" type="existingtype" use="optional"/>
+		<xs:attribute name="refersto" type="referstotype" use="optional"/>
+		<xs:attribute name="showreference" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					(Optional) When set to true, the column shows the reference value instead of the stored field value.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="applicationextensiontype">
+		<xs:annotation>
+			<xs:documentation>
+				Defines UI elements that extend a standard page.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="button" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						Defines a button that can be added to a page. The href attribute specifies the destination URL or the relative path to an ASPX page.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:all>
+						<xs:element name="mandatorylegislation" type="legislationtype" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="mandatoryfeaturesets" type="mandatoryfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="forbiddenfeaturesets" type="forbiddenfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="featurecheck" type="featurechecktype" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="visibleexpression" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+					</xs:all>
+					<xs:attribute name="id" type="idtype" use="required"/>
+					<xs:attribute name="caption" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation>
+								Text displayed for the button.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="captionid" type="termidtype" use="optional"/>
+					<xs:attribute name="translationid" type="translationidtype" use="optional"/>
+					<xs:attribute name="href" type="hreftype" use="optional"/>
+					<xs:attribute name="showinnewtab" type="showinnewtabtype" use="optional"/>
+					<xs:attribute name="existing" type="existingtype" use="required"/>
+					<xs:attribute name="positionbefore" type="idtype" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="powerbibutton" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						Defines a button that opens a page in Exact Online Premium and renders an embedded Power BI report.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:all minOccurs="1">
+						<xs:element name="powerbireportembedlink" type="powerbireportembeddedlink" minOccurs="1" maxOccurs="1"/>
+						<xs:element name="mandatoryfeaturesets" type="mandatoryfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="forbiddenfeaturesets" type="forbiddenfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="featurecheck" type="featurechecktype" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="mandatorylegislation" type="legislationtype" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="visibleexpression" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="functionpoint" type="xs:string" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="permission" type="permissiontype" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="pagetitle" type="xs:string" minOccurs="0" maxOccurs="1">
+							<xs:annotation>
+								<xs:documentation>
+									(Optional) the title to display on top of the embed page. When omitted, the default title “Power BI Report“ will be used.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:all>
+					<xs:attribute name="id" type="idtype" use="required"/>
+					<xs:attribute name="caption" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation>
+								Text displayed for the Power BI button.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="captionid" type="termidtype" use="optional"/>
+					<xs:attribute name="translationid" type="translationidtype" use="optional"/>
+					<xs:attribute name="showinnewtab" type="showinnewtabtype" use="optional"/>
+					<xs:attribute name="existing" type="existingtype" use="required"/>
+					<xs:attribute name="positionbefore" type="idtype" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="googlesheetsbutton" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						Defines a button that opens a page in Exact Online Premium and renders embedded Google Sheets content.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:all minOccurs="1">
+						<xs:element name="googlesheetsembedlink" type="googlesheetsembeddedlink" minOccurs="1" maxOccurs="1"/>
+						<xs:element name="mandatoryfeaturesets" type="mandatoryfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="forbiddenfeaturesets" type="forbiddenfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="featurecheck" type="featurechecktype" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="mandatorylegislation" type="legislationtype" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="visibleexpression" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="functionpoint" type="xs:string" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="permission" type="permissiontype" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="pagetitle" type="xs:string" minOccurs="0" maxOccurs="1">
+							<xs:annotation>
+								<xs:documentation>
+									(Optional) the title to display on top of the embed page. When omitted, the default title “Google Sheets“ will be used.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:all>
+					<xs:attribute name="id" type="idtype" use="required"/>
+					<xs:attribute name="caption" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation>
+								Text displayed for the Google Sheets button.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="captionid" type="termidtype" use="optional"/>
+					<xs:attribute name="translationid" type="translationidtype" use="optional"/>
+					<xs:attribute name="showinnewtab" type="showinnewtabtype" use="optional"/>
+					<xs:attribute name="existing" type="existingtype" use="required"/>
+					<xs:attribute name="positionbefore" type="idtype" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="monitor" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>
+						Defines a monitor that contains monitor items. Monitor items are clickable tiles with optional images.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="mandatorylegislation" type="legislationtype" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="mandatoryfeaturesets" type="mandatoryfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="forbiddenfeaturesets" type="forbiddenfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="featurecheck" type="featurechecktype" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="visibleexpression" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+						<xs:element name="monitoritem" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									Defines a monitor item.
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:all>
+									<xs:element name="mandatorylegislation" type="legislationtype" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="mandatoryfeaturesets" type="mandatoryfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="forbiddenfeaturesets" type="forbiddenfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="featurecheck" type="featurechecktype" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="visibleexpression" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+								</xs:all>
+								<xs:attribute name="id" type="idtype" use="required"/>
+								<xs:attribute name="caption" type="xs:string" use="optional">
+									<xs:annotation>
+										<xs:documentation>
+											Text displayed for the monitor item.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="captionid" type="termidtype" use="optional"/>
+								<xs:attribute name="translationid" type="translationidtype" use="optional"/>
+								<xs:attribute name="href" type="hreftype" use="optional"/>
+								<xs:attribute name="showinnewtab" type="showinnewtabtype" use="optional"/>
+								<xs:attribute name="image" type="xs:string" use="optional">
+									<xs:annotation>
+										<xs:documentation>
+											Icon used for the monitor item. If no image is specified, mtr_docs.gif is used by default. Only images available in Exact Online can be used.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="existing" type="existingtype" use="required"/>
+								<xs:attribute name="positionbefore" type="idtype" use="optional"/>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="powerbimonitoritem" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									Defines a monitor item that opens a page in Exact Online Premium and renders an embedded Power BI report.
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:all minOccurs="1">
+									<xs:element name="powerbireportembedlink" type="powerbireportembeddedlink" minOccurs="1" maxOccurs="1"/>
+									<xs:element name="mandatorylegislation" type="legislationtype" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="mandatoryfeaturesets" type="mandatoryfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="forbiddenfeaturesets" type="forbiddenfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="featurecheck" type="featurechecktype" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="visibleexpression" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="functionpoint" type="xs:string" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="permission" type="permissiontype" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="pagetitle" type="xs:string" minOccurs="0" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>
+												(Optional) the title to display on top of the embed page. When omitted, the default title “Power BI Report“ will be used.
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:all>
+								<xs:attribute name="id" type="idtype" use="required"/>
+								<xs:attribute name="caption" type="xs:string" use="optional">
+									<xs:annotation>
+										<xs:documentation>
+											Text displayed for the Power BI monitor item.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="captionid" type="termidtype" use="optional"/>
+								<xs:attribute name="translationid" type="translationidtype" use="optional"/>
+								<xs:attribute name="showinnewtab" type="showinnewtabtype" use="optional"/>
+								<xs:attribute name="image" type="xs:string" use="optional">
+									<xs:annotation>
+										<xs:documentation>
+											Icon used for the Power BI monitor item. If no image is specified, mtr_docs.gif is used by default. Only images available in Exact Online can be used.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="existing" type="existingtype" use="required"/>
+								<xs:attribute name="positionbefore" type="idtype" use="optional"/>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="googlesheetsmonitoritem" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									Defines a monitor item that opens a page in Exact Online Premium and renders embedded Google Sheets content.
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:all minOccurs="1">
+									<xs:element name="googlesheetsembedlink" type="googlesheetsembeddedlink" minOccurs="1" maxOccurs="1"/>
+									<xs:element name="mandatorylegislation" type="legislationtype" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="mandatoryfeaturesets" type="mandatoryfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="forbiddenfeaturesets" type="forbiddenfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="featurecheck" type="featurechecktype" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="visibleexpression" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="functionpoint" type="xs:string" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="permission" type="permissiontype" minOccurs="0" maxOccurs="1"/>
+									<xs:element name="pagetitle" type="xs:string" minOccurs="0" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>
+												(Optional) the title to display on top of the embed page. When omitted, the default title “Google Sheets“ will be used.
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:all>
+								<xs:attribute name="id" type="idtype" use="required"/>
+								<xs:attribute name="caption" type="xs:string" use="optional">
+									<xs:annotation>
+										<xs:documentation>
+											Text displayed for the Google Sheets monitor item.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="captionid" type="termidtype" use="optional"/>
+								<xs:attribute name="translationid" type="translationidtype" use="optional"/>
+								<xs:attribute name="showinnewtab" type="showinnewtabtype" use="optional"/>
+								<xs:attribute name="image" type="xs:string" use="optional">
+									<xs:annotation>
+										<xs:documentation>
+											Icon used for the Google Sheets monitor item. If no image is specified, mtr_docs.gif is used by default. Only images available in Exact Online can be used.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="existing" type="existingtype" use="required"/>
+								<xs:attribute name="positionbefore" type="idtype" use="optional"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="id" type="idtype" use="required"/>
+					<xs:attribute name="existing" type="existingtype" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="cardsection" type="cardsectiontype" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="contentsectionrow" type="contentsectionrowtype" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="gridpageheader" type="gridpageheadertype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="gridcolumn" type="gridcolumntype" minOccurs="0" maxOccurs="unbounded"/>
+			<!-- WE ARE NOT SURE ABOUT THE FILTER BLOCK-->
+			<xs:element name="filterblock" type="filterblocktype" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="columngroup" type="columngrouptype" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="mandatorylegislation" type="legislationtype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="featurecheck" type="featurechecktype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="mandatoryfeaturesets" type="mandatoryfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="forbiddenfeaturesets" type="forbiddenfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+		<xs:attribute name="application" type="applicationtype" use="required">
+			<xs:annotation>
+				<xs:documentation>
+					Specifies the standard Exact Online Premium .aspx page to extend.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="extensiontype">
+		<xs:all>
+			<xs:element name="azurefunctions" type="azurefunctionstype" minOccurs="0" maxOccurs="1" />
+			<xs:element name="entities" type="entitiestype" minOccurs="0" maxOccurs="1" />
+			<xs:element name="businesscomponentextensions" type="businesscomponentextensionstype" minOccurs="0" maxOccurs="1" />
+			<xs:element name="megamenuextensions" type="megamenuextensionstype" minOccurs="0" maxOccurs="1" />
+			<xs:element name="quickmenuextensions" type="quickmenuextensionstype" minOccurs="0" maxOccurs="1" />
+			<xs:element name="applicationextensions" type="applicationextensionstype" minOccurs="0" maxOccurs="1" />
+			<xs:element name="companysettingsextensions" type="companysettingsextensionstype" minOccurs="0" maxOccurs="1" />
+			<xs:element name="translationextensions" type="translationextensionstype" minOccurs="0" maxOccurs="1" />
+		</xs:all>
+		<xs:attribute name="code" type="extensioncodetype" use="required"/>
+		<xs:attribute name="version" type="majorminorpatchversiontype" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="customentitiestype">
+		<xs:annotation>
+			<xs:documentation>
+				Contains definitions of custom entities, their properties, and their table definitions. The required table scripts are generated and executed when the extension is installed.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="customentity" type="customentitytype" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="customentitytype">
+		<xs:annotation>
+			<xs:documentation>
+				Defines a custom entity to be created.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="mandatorylegislation" type="legislationtype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="mandatoryfeaturesets" type="mandatoryfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="forbiddenfeaturesets" type="forbiddenfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="featurecheck" type="featurechecktype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="property" type="customentitypropertytype" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="nowhitespacestringtype" use="required">
+			<xs:annotation>
+				<xs:documentation>
+					Name of the custom entity. This is the business component name for the custom entity and must be prefixed with the solution code.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="table" type="sqltablecolumnlength" use="required">
+			<xs:annotation>
+				<xs:documentation>
+					Name of the table created to store custom entity data. It must be prefixed with the solution code.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="description" type="xs:string" use="required"/>
+		<xs:attribute name="descriptionplural" type="xs:string" use="required"/>
+		<xs:attribute name="translationid" type="translationidtype" use="optional"/>
+		<xs:attribute name="translationpluralid" type="translationidtype" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="customentitypropertytype">
+		<xs:annotation>
+			<xs:documentation>
+				Defines a custom entity property.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="listitems" type="listitemstype" minOccurs="0" maxOccurs="1">
+				<xs:unique name="unique_listvalue">
+					<xs:selector xpath="listitem"/>
+					<xs:field xpath="@value"/>
+				</xs:unique>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="name" type="sqltablecolumnlength" use="required"/>
+		<xs:attribute name="caption" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>
+					Text displayed for the custom entity property.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="captionid" type="termidtype" use="optional"/>
+		<xs:attribute name="translationid" type="translationidtype" use="optional"/>
+		<xs:attribute name="type" type="customentitypropertytypetype" use="required"/>
+		<xs:attribute name="length" type="unsignedinttype4000" use="optional"/>
+		<xs:attribute name="refersto" type="referstotype" use="optional"/>
+		<xs:attribute name="referstocustomentity" type="referstocustomentitytype" use="optional"/>
+		<xs:attribute name="mandatoryfeatureset" type="featuresettype" use="optional"/>
+		<xs:attribute name="allowempty" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					Indicates whether the property is optional. The default is true.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="unique" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					Indicates whether the property value must be unique. The default is false. At least one property should have unique set to true.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="iscode" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					Indicates that the property value is used as the code part of a browser control when referencing another entity.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="isdescription" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					Indicates that the property value is used as the description part of a browser control when referencing another entity.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="autoincrement" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					Indicates whether a unique value is generated automatically when a new record is created.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="startvalue" type="xs:unsignedInt" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					Specifies the starting value used when autoincrement is true. The default is 0.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="scale" type="unsignedinttype10" use="optional"/>
+		<xs:attribute name="deleteaction" type="deleteactiontype" use="optional"/>
+	</xs:complexType>
+	<xs:simpleType name="pagetypetype">
+		<xs:annotation>
+			<xs:documentation>
+				Specifies the page type. Supported values are Maintenance, Overview, Card, and Entry.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Maintenance"/>
+			<xs:enumeration value="Overview"/>
+			<xs:enumeration value="Card"/>
+			<xs:enumeration value="Entry"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="referstocustomentitytype">
+		<xs:annotation>
+			<xs:documentation>
+				Specifies a reference to a custom entity defined in the extension. This attribute is used with properties of type guid.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="nowhitespacestringtype"/>
+	</xs:simpleType>
+	<xs:complexType name="customentityroledefinition">
+		<xs:annotation>
+			<xs:documentation>
+				Assigns a role permission to a custom entity defined in the extension.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="name" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>
+					Name of the custom entity. It must refer to a valid custom entity defined in this XML.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="permission" type="permissiontype" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="eolroletype">
+		<xs:annotation>
+			<xs:documentation>
+				Uses an existing Exact Online role to grant permissions to custom entities or Workflow custom entities in the extension.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="customentity" type="customentityroledefinition" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:int" use="required">
+			<xs:annotation>
+				<xs:documentation>
+					ID of an existing Exact Online role.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="name" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					Name of the role.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="caption" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					Text displayed for the role in the UI.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="extensionroletype">
+		<xs:annotation>
+			<xs:documentation>
+				Defines a new extension role that can be used to grant permissions to custom entities.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="customentity" type="customentityroledefinition" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>
+					Name of the extension role. It must be prefixed with the extension code.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="caption" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>
+					Text displayed for the role in the UI.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="captionid" type="termidtype" use="optional"/>
+		<xs:attribute name="translationid" type="nowhitespacestringtype" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="rolesType">
+		<xs:annotation>
+			<xs:documentation>
+				Defines roles that allow customers to assign permissions to custom entities by using existing Exact Online roles or custom extension roles.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="extensionrole" type="extensionroletype" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="existingrole" type="eolroletype" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="workflowactorinvolvementtype">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="User"/>
+			<xs:enumeration value="UserManager"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="workflowuserinvolvementtype">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Creator"/>
+			<xs:enumeration value="User"/>
+			<xs:enumeration value="UserManager"/>
+			<xs:enumeration value="AccountManager"/>
+			<xs:enumeration value="ProjectManager"/>
+			<xs:enumeration value="Employee"/>
+			<xs:enumeration value="EmployeeManager"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="automationactiontypetype">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Create"/>
+			<xs:enumeration value="Update"/>
+			<xs:enumeration value="Delete"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="assignscopetype">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Current"/>
+			<xs:enumeration value="Everyone"/>
+			<xs:enumeration value="Team"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="workflowstagetype">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[_A-Za-z0-9]{1,60}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="workflowdefinitionstype">
+		<xs:annotation>
+			<xs:documentation>
+				Contains Workflow definitions for Workflow custom entities.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="workflowdefinition" type="workflowdefinitiontype" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:group name="permissionstype">
+		<xs:sequence>
+			<xs:element name="user" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="involvementtype" type="workflowuserinvolvementtype" use="required"/>
+					<xs:attribute name="property" type="nowhitespacestringtype" use="optional"/>
+					<xs:attribute name="customentityproperty" type="nowhitespacestringtype" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="team" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="code" type="xs:string" use="optional"/>
+					<xs:attribute name="property" type="nowhitespacestringtype" use="optional"/>
+					<xs:attribute name="role" type="xs:string" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="actor" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="involvementtype" type="workflowactorinvolvementtype" use="optional"/>
+					<xs:attribute name="action" type="nowhitespacestringtype" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="existingrole" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="id" type ="xs:int" use="required"/>
+					<xs:attribute name="name" type="xs:string" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="extensionrole" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="name" type="xs:string" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:complexType name="actionpermissionstype">
+		<xs:annotation>
+			<xs:documentation>
+				Specifies which users, teams, actors, or roles have access to the action.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:group ref="permissionstype" minOccurs="0" maxOccurs="1" />
+		<xs:attribute name="denyassign" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					When denyassign="true", the assigned user is not allowed to perform this action.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="denyassume" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					When denyassume="true", the assumed user is not allowed to perform this action.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="stagepermissionstype">
+		<xs:group ref="permissionstype" minOccurs="0" maxOccurs="1" />
+		<xs:attribute name="denyall" type="xs:boolean" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="assumepermissiontype">
+		<xs:sequence>
+			<xs:element name="everyone" minOccurs="0" maxOccurs="1">
+				<xs:complexType/>
+			</xs:element>
+			<xs:element name="current" minOccurs="0" maxOccurs="1">
+				<xs:complexType/>
+			</xs:element>
+			<xs:group ref="permissionstype" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="automationstype">
+		<xs:annotation>
+			<xs:documentation>
+				Contains automation definitions for a stage action.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="automation" type="automationtype" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="automationtype">
+		<xs:annotation>
+			<xs:documentation>
+				Defines an automation.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="conditionexpression" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						Condition that determines whether the automation actions are executed.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="automationaction" type="automationactiontype" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="description" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>
+					Description of the automation.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="skiptype">
+		<xs:annotation>
+			<xs:documentation>
+				Defines a conditional redirect from an action's default tostage to an alternative stage.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="condition" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>
+						Logical expression that determines whether the Workflow skips to the target stage.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="tostage" type="workflowstagetype" use="required">
+			<xs:annotation>
+				<xs:documentation>
+					Stage to which the Workflow proceeds when the condition is met.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="assigntype">
+		<xs:attribute name="scope" type="assignscopetype" use="required">
+			<xs:annotation>
+				<xs:documentation>
+					Defines the eligible users that the current actor is allowed to assign the Workflow.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="teamcode" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					Defines the team whose members are eligible users to whom the current actor can assign the Workflow.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="automationactiontype">
+		<xs:annotation>
+			<xs:documentation>
+				Defines an automation action. Multiple automation actions can be specified in a single automation.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="enabledexpression" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						Condition that determines whether the automation action is executed.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="properties" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						Contains properties that are used while executing the automation action.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="property" minOccurs="1" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									Defines a property used by the automation action.
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attribute name="name" type="stringmaxlength60" use="required">
+									<xs:annotation>
+										<xs:documentation>
+											Name of the business component property used by the automation action.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="valueexpression" type="xs:string" use="optional">
+									<xs:annotation>
+										<xs:documentation>
+											Expression assigned to the property value.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="literalvalue" type="xs:string" use="optional">
+									<xs:annotation>
+										<xs:documentation>
+											Literal value assigned to the property.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="cancontinueexpression" type="xs:string" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+		<xs:attribute name="type" type="automationactiontypetype" use="required">
+			<xs:annotation>
+				<xs:documentation>
+					Type of automation action. Supported values are Create, Update, and Delete.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="businesscomponent" type="stringmaxlength60" use="required">
+			<xs:annotation>
+				<xs:documentation>
+					Business component targeted by the automation action.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="description" type="stringmaxlength255" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					Description of the automation action.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="workflowcustomentitytype">
+		<xs:annotation>
+			<xs:documentation>
+				Defines a Workflow custom entity.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="mandatorylegislation" type="legislationtype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="mandatoryfeaturesets" type="mandatoryfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="forbiddenfeaturesets" type="forbiddenfeaturesetstype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="featurecheck" type="featurechecktype" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="property" type="workflowcustomentitypropertytype" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="table" type="sqltablecolumnlength" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="workflowcustomentitypropertytype">
+		<xs:annotation>
+			<xs:documentation>
+				Defines a Workflow property.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="listitems" type="listitemstype" minOccurs="0" maxOccurs="1">
+				<xs:unique name="wflunique_listvalue">
+					<xs:selector xpath="listitem"/>
+					<xs:field xpath="@value"/>
+				</xs:unique>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="name" type="sqltablecolumnlength" use="required">
+			<xs:annotation>
+				<xs:documentation>
+					Name of the Workflow property. This is the field name used in the table created for the Workflow custom entity.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="caption" type="stringmaxlength255" use="required">
+			<xs:annotation>
+				<xs:documentation>
+					Text displayed for the Workflow property.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="captionid" type="termidtype" use="optional"/>
+		<xs:attribute name="translationid" type="translationidtype" use="optional"/>
+		<xs:attribute name="type" type="workflowpropertytypetype" use="required"/>
+		<xs:attribute name="length" type="unsignedinttype4000" use="optional"/>
+		<xs:attribute name="refersto" type="referstotype" use="optional"/>
+		<xs:attribute name="referstocustomentity" type="referstocustomentitytype" use="optional"/>
+		<xs:attribute name="mandatoryfeatureset" type="featuresettype" use="optional"/>
+		<xs:attribute name="allowempty" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					Indicates whether the property is optional. The default is true.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="unique" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					Indicates whether the property value must be unique. The default is false. At least one property should have unique set to true.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="iscode" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					Indicates that the property value is used as the code part of a browser control when referencing another entity.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="isdescription" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					Indicates that the property value is used as the description part of a browser control when referencing another entity.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="autoincrement" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					Indicates whether a unique value is generated automatically when a new record is created.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="startvalue" type="xs:unsignedInt" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					Specifies the starting value used when autoincrement is true. The default is 0.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="scale" type="unsignedinttype10" use="optional"/>
+		<xs:attribute name="crosscompany" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					Enables references to standard entities, custom entities, or Workflow custom entities from other available companies. This attribute is used with properties of type guid. The default is false.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="uploadmultiple" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+					(Optional) Indicates whether multiple files can be uploaded for an attachment property. The default is true, allowing up to 15 files.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="workflowdefinitiontype">
+		<xs:annotation>
+			<xs:documentation>
+				Defines a Workflow.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="customentity" type="workflowcustomentitytype"/>
+			<xs:element name="stages" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						Contains the stages of the Workflow.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="stage" minOccurs="2" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									Defines a stage, including its property settings, actions, and permissions.
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+
+									<xs:element name="propertysettings" minOccurs="0" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>
+												Contains settings for Workflow custom entity properties used in the stage.
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="propertysetting" minOccurs="0" maxOccurs="unbounded">
+													<xs:annotation>
+														<xs:documentation>
+															Defines how a Workflow custom entity property behaves in the stage.
+														</xs:documentation>
+													</xs:annotation>
+													<xs:complexType>
+														<xs:attribute name="property" type="nowhitespacestringtype" use="required">
+															<xs:annotation>
+																<xs:documentation>
+																	Name of the Workflow custom entity property.
+																</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+														<xs:attribute name="mandatory" type="xs:boolean" use="optional">
+															<xs:annotation>
+																<xs:documentation>
+																	Indicates whether the property is mandatory in the stage.
+																</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+														<xs:attribute name="visible" type="xs:boolean" use="optional">
+															<xs:annotation>
+																<xs:documentation>
+																	Indicates whether the property is visible in the stage.
+																</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+														<xs:attribute name="enabled" type="xs:boolean" use="optional">
+															<xs:annotation>
+																<xs:documentation>
+																	Indicates whether the property is enabled in the stage.
+																</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="assume" minOccurs="0" maxOccurs="1">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="permissions" type="assumepermissiontype" />
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="assign" type="assigntype" minOccurs="0" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>
+												Defines whether assign of Workflow is allowed and specifies the eligible users for it.
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="actions" minOccurs="0" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>
+												Defines the actions available in the stage.
+											</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="action" minOccurs="0" maxOccurs="unbounded">
+													<xs:annotation>
+														<xs:documentation>
+															Defines an action available in the stage.
+														</xs:documentation>
+													</xs:annotation>
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="permissions" type="actionpermissionstype" minOccurs="0" maxOccurs="1"/>
+															<xs:element name="skip" type="skiptype" minOccurs="0" maxOccurs="unbounded"/>
+															<xs:element name="automations" type="automationstype" minOccurs="0" maxOccurs="1"/>
+														</xs:sequence>
+														<xs:attribute name="name" type="nowhitespacestringtype" use="required">
+															<xs:annotation>
+																<xs:documentation>
+																	Name of the action.
+																</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+														<xs:attribute name="tostage" type="workflowstagetype" use="required">
+															<xs:annotation>
+																<xs:documentation>
+																	Name of the stage to which the action transitions.
+																</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+														<xs:attribute name="caption" type="xs:string" use="required">
+															<xs:annotation>
+																<xs:documentation>
+																	Text displayed for the action.
+																</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+														<xs:attribute name="captionid" type="termidtype" use="optional"/>
+														<xs:attribute name="translationid" type="translationidtype" use="optional"/>
+														<xs:attribute name="triggerdescription" type="stringmaxlength255" use="optional">
+															<xs:annotation>
+																<xs:documentation>
+																	Description of the automation trigger.
+																</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="editpermissions" type="stagepermissionstype" minOccurs="0" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>
+												Restricts which users may edit records in this stage, in addition to role-based permissions.
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="deletepermissions" type="stagepermissionstype" minOccurs="0" maxOccurs="1">
+										<xs:annotation>
+											<xs:documentation>
+												Restricts which users may delete records in this stage, in addition to role-based permissions.
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="name" type="nowhitespacestringtype" use="required">
+									<xs:annotation>
+										<xs:documentation>
+											Name of the stage.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="caption" type="xs:string" use="required">
+									<xs:annotation>
+										<xs:documentation>
+											Text displayed for the stage.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="captionid" type="termidtype" use="optional"/>
+								<xs:attribute name="translationid" type="translationidtype" use="optional"/>
+								<xs:attribute name="defaultaction" type="xs:string" use="optional">
+									<xs:annotation>
+										<xs:documentation>
+											Name of the action in the current stage that is treated as the default action. If omitted, the first available action is used.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="stagetype" type="stagetypetype" use="optional">
+									<xs:annotation>
+										<xs:documentation>
+											Specifies the stage type.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="enablepriority" type="xs:boolean" use="optional">
+									<xs:annotation>
+										<xs:documentation>
+											Enables/disables the property priority for the stage. Default value is true. When enablepriority=false, then the property priority is disabled for the stage and setting enablepriority=false is only valid when usepriority=true.
+										</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="usepriority" type="xs:boolean" use="optional"/>
+		<xs:attribute name="name" type="stringmaxlength60" use="required">
+			<xs:annotation>
+				<xs:documentation>
+					Name of the Workflow. It must be prefixed with an extension code.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="description" type="stringmaxlength255" use="required"/>
+		<xs:attribute name="descriptionplural" type="xs:string" use="required"/>
+		<xs:attribute name="captionid" type="termidtype" use="optional"/>
+		<xs:attribute name="translationid" type="translationidtype" use="optional"/>
+		<xs:attribute name="translationpluralid" type="translationidtype" use="optional"/>
+	</xs:complexType>
+	<xs:simpleType name="einvoiceelementtype">
+		<xs:annotation>
+			<xs:documentation>
+				Maps an extension property to a specific e-invoice element. When a sales invoice or credit note is generated as an e-invoice, the value of the mapped extension property is inserted into the corresponding UBL XML element.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ContractDocumentReference" />
+			<xs:enumeration value="ProjectReference" />
+			<xs:enumeration value="OrderLineReference" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="extension" type="extensiontype">
+		<xs:unique name="unique_applicationextension_application">
+			<xs:selector xpath="applicationextensions/applicationextension"/>
+			<xs:field xpath="@application"/>
+		</xs:unique>
+	</xs:element>
+</xs:schema>
